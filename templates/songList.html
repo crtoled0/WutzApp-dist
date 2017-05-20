@@ -1,0 +1,41 @@
+<!-- Connect to Bar Modal -->
+<div id="songListContainer" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <img src="img/cross-menu.svg" />
+            </button>
+          </div>
+          <div class="modal-body">
+            <section>
+                <table class="table">
+                  <tbody data-bind="foreach:{data: songs ,as: '$sng'}">
+                      <tr class="songRow">
+                          <td>
+                            <!-- ko if: $sng.media_type === 'audio' -->
+                              <span class="glyphicon glyphicon-music"></span>
+                            <!-- /ko -->
+                            <!-- ko if: $sng.media_type !== 'audio' -->
+                              <span class="glyphicon glyphicon-facetime-video"></span>
+                            <!-- /ko -->
+                          </td>
+                          <td data-bind="html:$sng.name"> - </td>
+                          <td>
+                            <button type="button" class="btn btn-primary btn-xs" style="float:right;" data-bind="click:function(){$parent.addItem(this);}">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                          </td>
+                      </tr>
+                  </tbody>
+                </table>
+            </section>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="html:koMods['main'].trans('close')">Cerrar</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+ </div><!-- /.modal -->
+<!--  /Connect to Bar Modal -->
+<script type="text/javascript" src="js/komodels/songListModel.js"></script>

@@ -1,0 +1,65 @@
+<!-- Search Result Section -->
+<div id="searchResultContainer" class="page container-fluid">
+  <div class="row">
+    <div class="panel panel-success">
+      <!-- ko if: seArtists().length > 0 -->
+        <div class="panel-heading" data-bind="html:koMods['main'].trans('artists')">-</div>
+        <table class="table">
+          <tbody data-bind="foreach:{data: seArtists ,as: '$art'}">
+              <tr>
+                  <td><img data-bind="attr:{'src':$art.lfm_img_url}"/></td>
+                  <td data-bind="html:$art.name">- </td>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-xs" style="float:right;" data-bind="click:function(){$parent.goArtAlbList(this);}">
+                          <span class="fa fa-list" aria-hidden="true"></span>
+                    </button>
+                  </td>
+              </tr>
+          </tbody>
+        </table>
+     <!-- /ko -->
+     <!-- ko if: seAlbums().length > 0 -->
+        <div class="panel-heading" data-bind="html:koMods['main'].trans('albums')">-</div>
+        <table class="table">
+          <tbody data-bind="foreach:{data: seAlbums ,as: '$alb'}">
+              <tr>
+                  <td><img data-bind="attr:{'src':$alb.lfm_img_url}"/></td>
+                  <td data-bind="html:$alb.name">- </td>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-xs" style="float:right;" data-bind="click:function(){$parent.displaySongs4Album(this);}">
+                          <span class="fa fa-list" aria-hidden="true"></span>
+                    </button>
+                  </td>
+              </tr>
+          </tbody>
+        </table>
+    <!-- /ko -->
+    <!-- ko if: seSongs().length > 0 -->
+        <div class="panel-heading" data-bind="html:koMods['main'].trans('songs')">-</div>
+        <table class="table">
+          <tbody data-bind="foreach:{data: seSongs ,as: '$sng'}">
+              <tr>
+                  <td>
+                    <!-- ko if: $sng.media_type === 'audio' -->
+                      <span class="glyphicon glyphicon-music"></span>
+                    <!-- /ko -->
+                    <!-- ko if: $sng.media_type !== 'audio' -->
+                      <span class="glyphicon glyphicon-facetime-video"></span>
+                    <!-- /ko -->
+                  </td>
+                  <td data-bind="html:$sng.name">- </td>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-xs" style="float:right;" data-bind="click:function(){$parent.addSongToQueue(this);}">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                  </td>
+              </tr>
+          </tbody>
+        </table>
+     <!-- /ko -->
+    </div>
+  </div>
+
+</div>
+<!--  /Search Result Section -->
+<script type="text/javascript" src="js/komodels/searchResultModel.js"></script>

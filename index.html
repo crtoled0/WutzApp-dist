@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <link rel="icon" type="image/png" href="img/logo64x.png">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,900,900italic,700italic,700,500italic,400italic,500,300italic,300' rel='stylesheet' type='text/css'>
+	   <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+    <title>Wutz App</title>
+    <link href="css/burstfly.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link href='css/varelaRound.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link href="css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="css/wutzapp.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="loadingDiv"><i class="fa fa-spinner fa-spin" style="font-size:64px"></i></div>
+  <!-- ko if: getMessBox()-->
+  <div id="genericMessageBox" data-bind="attr:{'class': 'alert alert-'+getMessBox().type+' alert-dismissible'}" role="alert">
+    <!-- button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button -->
+    <strong data-bind="html:getMessBox().title"> </strong>. <span data-bind="html:getMessBox().msg"></span>
+  </div>
+<!-- /ko -->
+
+      <a name="ancre"></a>
+
+      <!-- CACHE -->
+      <div class="cache"></div>
+
+
+      <!-- FILTER -->
+
+        <div id="main-container-menu" class="object">
+            <div class="container-menu">
+                  <div id="main-cross" data-bind="click: function(){closeMainMenu();}">
+                    <div id="cross-menu"></div>
+                  </div>
+                  <div id="main-small-logo">
+                    <div class="small-logo"></div>
+                  </div>
+                  <div class="mainMenuItem" data-bind="if: barLoaded() && !barLoaded().connected">
+                      <a href="#" data-bind="click:function(){openConnect2Bar();}">
+                        <span class="fa fa-bolt" aria-hidden="true"></span>
+                        <span data-bind="html:trans('connect')"></span>- <span data-bind="html:barLoaded().nombreBar"></span>
+                      </a>
+                  </div>
+                  <div class="mainMenuItem" data-bind="if: barLoaded()">
+                      <a href="#" data-bind="click:function(){logOutBar();}">
+                        <span class="fa fa-sign-out" aria-hidden="false"></span>
+                        <span data-bind="html:trans('pick_bar')"></span> <span data-bind="html:barLoaded().nombreBar"></span>
+                      </a>
+                  </div>
+                  <div class="mainMenuItem" data-bind="if: false"><!-- this feature will come in future version -->
+                      <a href="#">
+                        <span class="fa fa-facebook" aria-hidden="false"></span>
+                        <span data-bind="html:trans('fb_login')"></span>
+                      </a>
+                  </div>
+              </div>
+          </div>
+
+      <!-- HEADER -->
+
+      <div id="wrapper-header">
+      	<div id="main-header" class="object">
+            <div id="stripes" data-bind="click: function(){openMainMenu();}"></div>
+            <!-- ko if: barLoaded() && barLoaded().nombreBar && barLoaded().connected -->
+            <div class="center-header">
+              <div class="label label-success" role="alert">
+                  <span data-bind="html:trans('connectedTo')"></span>
+                  <span data-bind="html: barLoaded().nombreBar"></span>
+              </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: barLoaded() && barLoaded().nombreBar && !barLoaded().connected -->
+            <div class="center-header">
+              <div class="label label-warning" role="alert" data-bind="html: 'Vista catálogo de '+barLoaded().nombreBar+'.'">
+                <span data-bind="html:trans('catalogViewTo')"></span>
+                <span data-bind="html: barLoaded().nombreBar"></span>
+              </div>
+            </div>
+            <!-- /ko -->
+      		  <div class="logo"><img src="img/logo64x64.png" alt="logo burstfly" height="38" width="90"></div>
+        </div>
+      </div>
+
+
+      <!-- NAVBAR -->
+
+      <div id="wrapper-navbar">
+      		<div class="navbar object">
+            <!-- ko if: displayMainMod() -->
+                <div class="input-group">
+                  <input id="filterInput" type="text" class="form-control input-sm" data-bind="attr:{'placeholder':trans('type_2_search')}">
+                  <span class="input-group-btn">
+                    <!-- ko if: isSearchIndexing() -->
+                      <button class="btn btn-success input-sm disabled" type="button" disabled="disabled">
+                          <span class="fa fa-spinner fa-spin" data-bind="attr:{'title':trans('indexing')}" ></span>
+                      </button>
+                    <!-- /ko -->
+                    <!-- ko if: !isSearchIndexing() -->
+                      <button class="btn btn-success input-sm" type="button" data-bind="click: function(){openSearchResultModel();},enable: canRaiseSearch">
+                         <span data-bind="html:trans('search_bar')"></span>
+                        <!-- span class="glyphicon glyphicon-search" aria-hidden="true" title="Buscar"></span -->
+                      </button>
+                    <!-- /ko -->
+                  </span>
+                </div><!-- /input-group -->
+            <!-- /ko  -->
+            <!-- ko if: !displayMainMod() -->
+                <div class="container navsection">
+                  <button class="btn btn-danger btn-block"  data-bind="click: function(){back2MainModel();}">
+                    <span class="glyphicon glyphicon-circle-arrow-left"></span>
+                    <span data-bind="html:trans('back')" ></span>
+                  </button>
+                </div>
+            <!-- /ko -->
+          </div>
+       </div>
+
+
+      <!-- PORTFOLIO -->
+  <div id="wrapper-container">
+      <div class="container object">
+      			<div id="main-container-image">
+                <section class="work closeAlbumsSec" style="display:none">
+                    <button class="btn btn-danger btn-block" data-bind="click:closeAlbums();">
+                      <span class="glyphicon glyphicon-circle-arrow-left"></span>
+                      <span data-bind="html:trans('back_2_artists')"></span>
+                    </button>
+                </section>
+                <section class="work albums" data-bind="foreach:{data: albums ,as: '$alb'}">
+                  <figure>
+                    <a href="#" data-bind="click:function(){$parent.openSongListModel(this);}">
+                      <img data-bind="attr:{'src':$alb.lfm_img_url}" alt="" />
+                      <span data-bind="html:$alb.name,attr:{'class':'box-label label label-'+$parent.nextColor()}">-</span>
+                      <span class="label label-active box-label-text itemName" data-bind="html:$alb.name">-</span>
+                    </a>
+                  </figure>
+                </section>
+                <section class="work closeAlbumsSec" style="display:none">
+                    <button class="btn btn-danger btn-block" data-bind="click:closeAlbums();">
+                      <span class="glyphicon glyphicon-circle-arrow-left"></span>
+                      <span data-bind="html:trans('back_2_artists')"></span>
+                    </button>
+                </section>
+      					<section class="work artists" data-bind="foreach:{data: artists ,as: '$art'}">
+                     <figure>
+                       <a href="#" data-bind="click:function(){$parent.fillAlbums(this);}">
+                         <img data-bind="attr:{'src':$art.lfm_img_url}" alt="" />
+                         <span data-bind="html:$art.name,attr:{'class':'box-label label label-'+$parent.nextColor()}">-</span>
+                         <span class="label label-active box-label-text itemName" data-bind="html:$art.name">-</span>
+                       </a>
+                     </figure>
+      					</section>
+      				</div>
+      	</div>
+      	<div id="wrapper-thank">
+          	<div class="thank">
+              	 <img src="img/logo.png" style="width:200px" />
+          	</div>
+      	</div>
+        <div id="wrapper-copyright">
+      		<div class="copyright">
+          		<div class="copy-text object">Copyright © 2016. Template by <a style="color:#D0D1D4;" href="http://designscrazed.org/">Dcrazed</a></div>
+        	</div>
+        </div>
+      </div>
+
+    <script type="text/javascript" src="js/ui/jquery.min.js"></script>
+    <script type="text/javascript" src="js/ui/jquery.scrollTo.min.js"></script>
+    <script type="text/javascript" src="js/ui/jquery.localScroll.min.js"></script>
+    <script type="text/javascript" src="js/ui/jquery-animate-css-rotate-scale.js"></script>
+  	<script type="text/javascript" src="js/ui/fastclick.min.js"></script>
+  	<script type="text/javascript" src="js/ui/jquery.animate-colors-min.js"></script>
+  	<script type="text/javascript" src="js/ui/jquery.animate-shadow-min.js"></script>
+    <script type="text/javascript" src="js/ui/burstfly.js"></script>
+
+    <script type="text/javascript" src="js/ui/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/ui/bootstrap-toggle.min.js"></script>
+    <script type="text/javascript" src="js/ui/knockout-3.4.0.js"></script>
+    <script type="text/javascript" src="js/ui/textSlider.js"></script>
+
+    <!-- Libs -->
+    <script type="text/javascript" src="js/lib/GenTFunctions.js"></script>
+    <script type="text/javascript" src="js/lib/AjaxWAdmin.js"></script>
+    <script type="text/javascript" src="js/lib/WutzGMapsAPI.js"></script>
+    <script type="text/javascript" src="js/lib/WutzCache.js"></script>
+    <script type="text/javascript" src="js/lib/WutzTranslator.js"></script>
+
+<!-- Main KO Model -->
+    <script type="text/javascript" src="js/komodels/mainModel.js"></script>
+    <!-- phonegap default -->
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+
+</html>

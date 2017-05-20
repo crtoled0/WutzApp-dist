@@ -1,0 +1,94 @@
+<!-- Connect to Bar Modal -->
+<div id="connect2BarContainer" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div id="searchBarBody" class="modal-body">
+            <div class="row">
+              <div id="main-small-logo">
+                <div class="small-logo"></div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                  <div id="inputSearchBar" class="input-group">
+                    <span class="input-group-btn">
+                      <button class="btn btn-warning input-sm" type="button" data-bind="click:function(){searchBarsByGPS();}">
+                        <span class="glyphicon glyphicon-map-marker"></span>
+                      </button>
+                    </span>
+                    <input type="text" class="form-control input-sm" data-bind="attr:{'placeholder':koMods['main'].trans('type_bar_id')}" id="searchBarInput">
+                    <span class="input-group-btn">
+                      <button class="btn btn-success input-sm" type="button" data-bind="click:function(){searchBars();}">
+                          <span data-bind="html:koMods['main'].trans('search_bar')"></span>
+                      </button>
+                    </span>
+                  </div><!-- /input-group -->
+                </div>
+            </div>
+            <div class="row">  <div class="col-md-12"><br/></div></div>
+            <div class="row">
+                <div class="col-md-12">
+                  <ul class="list-group" data-bind="foreach:{data: bars ,as: '$bar'}">
+                    <a href="#" data-bind="click:function(){$parent.showBarDetails(this);}" class="list-group-item list-group-item-success">
+                         <h5>
+                           <span data-bind="html:$bar.id"></span>
+                           <span class="glyphicon glyphicon-circle-arrow-right" style="float:right;"></span>
+                         </h5>
+                    </a>
+                  </ul>
+                  <div class="list-group" data-bind="if: bars().length === 0 && !openGPS()">
+                    <div class="list-group-item warning text-warning" data-bind="html:koMods['main'].trans('searchBarIntro')">
+
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12" data-bind="if: openGPS()">
+                  <section class="mapSectionContainer">
+                      <div id="mapHolder" ></div>
+                  </section>
+              </div>
+            </div>
+          </div>
+          <div id="detailsBarBody" class="modal-body">
+            <div class="row">
+                <div class="col-md-12 barDescMap">
+
+                </div>
+            </div>
+            <div class="row">  <div class="col-md-12"><br/></div></div>
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-warning" role="alert">
+                    <p class="text-success" data-bind="if: pickedBar()">
+                        <span data-bind="html:koMods['main'].trans('barDescTemplate',{'NAME':pickedBar().nombreBar, 'ID':pickedBar().id, 'MANAGER':pickedBar().representante, 'PHONE':pickedBar().telefono, 'EMAIL':pickedBar().email})"></span>
+                    </p>
+                    <p data-bind="html:koMods['main'].trans('daily_key_text')"> -- </p>
+                  </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                  <div id="inputTokenBar" class="input-group">
+                    <input type="text" class="form-control input-sm" placeholder="Token del día" data-bind="attr:{'placeholder':koMods['main'].trans('insert_keyday')}">
+                    <span class="input-group-btn">
+                      <button class="btn btn-danger input-sm" type="button" data-bind="click:function(){connect2Bar();}">
+                          <span data-bind="html:koMods['main'].trans('connect_2_bar')"></span>
+                      </button>
+                    </span>
+                  </div><!-- /input-group -->
+                </div>
+            </div>
+            <div class="row">  <div class="col-md-12"><br/></div></div>
+            <div class="row">
+                <div class="col-md-12">
+                   <button class="btn btn-success btn-sm btn-block" data-dismiss="modal" data-bind="html:koMods['main'].trans('check_catalog')"></button>
+                </div>
+            </div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+ </div><!-- /.modal -->
+<!--  /Connect to Bar Modal -->
+<script type="text/javascript" src="js/komodels/connect2BarModel.js"></script>

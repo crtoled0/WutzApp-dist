@@ -1,0 +1,171 @@
+.work .albums{
+  display: none;
+}
+
+.modal-dialog{
+  margin-left: 1px;
+  margin-right: 1px;
+}
+
+.modal{
+  /** top: 5px; **/
+}
+
+.modal-content{
+   background-color:rgba(34, 34, 34, 0.95);
+   color: #dddddd;
+}
+
+.modal-header{
+  border-bottom: 1px solid #555555;
+}
+
+.modal-footer{
+  border-top: 1px solid #555555;
+}
+
+.mapSectionContainer{
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+
+#detailsBarBody{
+  display: none;
+}
+
+#detailsBarBody .barDescMap{
+  text-align: center;
+  width:  96%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+#mapHolder{
+  width: calc(100%);
+  height: 100%;
+  min-height: 700px;
+}
+
+.mapWutzLabels{
+  color: #000000;
+  background-color: #FFFFFF;
+  font-family: "Lucida Grande", "Arial", sans-serif;
+  font-size: 10px;
+  text-align: center;
+  width: 60px;
+  white-space: nowrap;
+}
+
+.songNameCont{
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+}
+
+#genericMessageBox{
+  position: fixed;
+  display: none;
+  width: 100%;
+  z-index: 100000;
+}
+
+#loadingDiv{
+  display: none;
+  position: fixed;
+  width: 100%;
+  min-height: 100%;
+  background-color:rgba(34, 34, 34, 0.95);
+  z-index: 100000;
+}
+
+#loadingDiv i{
+  z-index: 100001;
+  color: #fff;
+  position: absolute;
+  left: 40%;
+  top: 40%;
+}
+
+#searchResultContainer{
+  margin-top: 25px;
+}
+
+#searchResultContainer tbody tr img{
+  width: 64px;
+  height: 64px;
+}
+
+#searchResultContainer tbody tr{
+}
+
+#searchResultContainer tbody tr:hover{
+    background-color: #ffe2a6;
+}
+
+.songRow:hover{
+    background-color: #555555;
+}
+
+.songRow td{
+  vertical-align: middle !important;
+}
+
+.navsection{
+   margin-top: 8px;
+   left: -17px;
+   position: absolute;
+}
+
+/* Smaller viewports — more tablets, old monitors */
+
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: top;
+  margin-right: -4px; /* Adjusts for spacing */
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: top;
+}
+
+@media only screen and (max-width: 860px) {
+  #mapHolder{
+    min-height: 700px;
+  }
+}
+
+/* Even smaller viewports — more tablets, etc. */
+
+@media only screen and (max-width: 740px) {
+  #mapHolder{
+    min-height: 600px;
+  }
+}
+
+/* Mobile phones (Landscape) and Tablets (Portrait) */
+
+@media only screen and (max-width: 610px) {
+  #mapHolder{
+    min-height: 500px;
+  }
+}
+
+/* Mobile phones (Landscape) and Tablets (Portrait) */
+
+@media only screen and (max-width: 480px) {
+  #mapHolder{
+    min-height: 400px;
+  }
+}
