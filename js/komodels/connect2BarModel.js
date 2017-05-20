@@ -1,1 +1,203 @@
-function Connect2BarModel(){var e,o=this,a=function(e){koMods.main.openLoading(),wmap.load(koMods.main.config(),function(){koMods.main.closeLoading(),console.log("Google Maps API loaded")})},n=function(o){var a=window.localStorage;e=device.uuid&&""!==device.uuid?device.uuid:a.getItem("guid")&&""!==a.getItem("guid")?a.getItem("guid"):gF.generateUUID(),a.setItem("guid",e),console.log("Setted GUID "+e)};o.bars=ko.observableArray([]),o.openGPS=ko.observable(!1),o.pickedBar=ko.observable(),o.canClose=ko.computed(function(){return!!koMods.main.barLoaded()},this),o.checkIfTokenSetted=function(e){if(!localStorage.getItem("tokenCache"))return!1;var a=JSON.parse(localStorage.getItem("tokenCache"));e?a[e]?$("#inputTokenBar input").val(a[e].dayToken):$("#inputTokenBar input").val(""):($("#searchBarInput").val(a.default.barId),o.searchBars(function(){if(!(o.bars().length>0))return!1;o.showBarDetails(o.bars()[0],function(){return $("#inputTokenBar input").val(a.default.dayToken),o.connect2Bar(),!0})}))},o.init=function(){console.log("Init Connect2BarModel ..."),n(),a(),$("#searchBarBody").slideDown(),$("#detailsBarBody").slideUp(),o.checkIfTokenSetted()},o.refresh=function(){$("#searchBarBody").slideDown(),$("#detailsBarBody").slideUp()},o.searchBars=function(e){o.bars([]),o.openGPS(!1);var a=$("#searchBarInput").val();console.log(a),koMods.main.openLoading(),window.wutzAdmin.callService({service:"searchBar/"+a},function(a){if(koMods.main.closeLoading(),console.log(a),o.bars(a),0===a.length){var n={type:"danger",title:locale.trans("msg_bardoesnt_exist_title"),msg:locale.trans("msg_bardoesnt_exist")};koMods.main.displayGetMessage(n)}e&&e()})},o.searchBarsByGPS=function(){o.bars([]),o.openGPS(!0),koMods.main.openLoading(),wmap.getNearByBarsFromGPS("mapHolder",function(e){if(koMods.main.closeLoading(),e.err){var a={type:"danger",title:"",msg:locale.trans(e.err)};koMods.main.displayGetMessage(a),o.openGPS(!1)}else{console.log(e);var n=e;n.lat&&n.lon&&(koMods.main.openLoading(),window.wutzAdmin.callService({service:"getNearByBars/"+n.lat+"/"+n.lon},function(e){koMods.main.closeLoading(),console.log(e),wmap.drawBarMarkers(e,n.gmap,function(e){o.showBarDetails(e)})}))}})},o.showBarDetails=function(e,a){var n=$("#detailsBarBody .barDescMap").parent().parent().width(),t=$("#detailsBarBody .barDescMap").css("height").replace("px","");console.log(n+" -- "+t),koMods.main.openLoading(),window.wutzAdmin.callService({service:"getBar/"+e.id},function(e){koMods.main.closeLoading(),wtzCache.loadBarCachedInfo(e.id,e.idcatalog,e.catVersion),console.log(e),o.pickedBar(e),koMods.main.barLoaded(e);var i=wmap.getStaticMapImgUrl(e.lat,e.lon,n,t);$("#detailsBarBody .barDescMap").html('<img src="'+i+'" />'),koMods.main.fillArtists(),o.checkIfTokenSetted(e.id),a&&a()}),$("#searchBarBody").slideUp(),$("#detailsBarBody").slideDown()},o.justDisplayBarDetails=function(){$("#searchBarBody").slideUp(),$("#detailsBarBody").slideDown()},o.connect2Bar=function(){var e=koMods.main.barLoaded(),o=$("#inputTokenBar input").val(),a={catId:e.idcatalog,token:o};koMods.main.openLoading(),window.wutzAdmin.callService({service:"checkToken",method:"POST",params:a},function(a){if(koMods.main.closeLoading(),console.log(a),a.tokenOK){e.connected=!0,e.dayToken=o,koMods.main.barLoaded(e),$("#connect2BarContainer").modal("hide");var n=localStorage.getItem("tokenCache");n=n?JSON.parse(n):{default:{}},n.default={barId:e.id,dayToken:o},n[e.id]={dayToken:o},localStorage.setItem("tokenCache",JSON.stringify(n))}else{var t={type:"danger",title:locale.trans("not_connected"),msg:locale.trans("no_connected_msg")};koMods.main.displayGetMessage(t)}})}}
+function Connect2BarModel() {
+    var mainMod = this;
+//Private
+   var catsLoaded;
+   var guid;
+
+    //Funct
+    var initGPSetup = function(mod){
+        koMods["main"].openLoading();
+        wmap.load(koMods["main"].config(),function(){
+          koMods["main"].closeLoading();
+          console.log("Google Maps API loaded");
+        });
+    };
+
+    var initDevUsrSetup = function(mod){
+      var kuki = window.localStorage;
+      if(device.uuid && device.uuid !== ""){
+          guid = device.uuid;
+      }
+      else if(kuki.getItem("guid") && kuki.getItem("guid") !== ""){
+          guid = kuki.getItem("guid");
+      }
+      else{
+          guid = gF.generateUUID();
+      }
+      kuki.setItem("guid",guid);
+      console.log("Setted GUID "+guid);
+    };
+
+//Public
+    mainMod.bars = ko.observableArray([]);
+    mainMod.openGPS = ko.observable(false);
+    mainMod.pickedBar = ko.observable();
+    mainMod.canClose = ko.computed(function(){
+        if(koMods["main"].barLoaded())
+           return true;
+        else
+           return false;
+    },this);
+    mainMod.checkIfTokenSetted = function(barId){
+      if(localStorage.getItem("tokenCache")){
+        var tokenCache = JSON.parse(localStorage.getItem("tokenCache"));
+        var tokenLoaded;
+        if(!barId){
+            $("#searchBarInput").val(tokenCache.default.barId);
+            mainMod.searchBars(function(){
+              if(mainMod.bars().length > 0){
+                   mainMod.showBarDetails(mainMod.bars()[0],function(){
+                        $("#inputTokenBar input").val(tokenCache.default.dayToken);
+                        mainMod.connect2Bar();
+                        return true;
+                   });
+               }
+               else {
+                 return false;
+               }
+            });
+        }
+        else{
+          if(tokenCache[barId])
+            $("#inputTokenBar input").val(tokenCache[barId].dayToken);
+          else
+            $("#inputTokenBar input").val("");
+        }
+      }
+      else{
+         return false;
+      }
+    }
+
+    mainMod.init = function(){
+      console.log("Init Connect2BarModel ...");
+      initDevUsrSetup();
+      initGPSetup();
+      $("#searchBarBody").slideDown();
+      $("#detailsBarBody").slideUp();
+      mainMod.checkIfTokenSetted();
+    };
+
+    mainMod.refresh = function(){
+      $("#searchBarBody").slideDown();
+      $("#detailsBarBody").slideUp();
+    };
+
+    mainMod.searchBars = function(callback){
+      mainMod.bars([]);
+      mainMod.openGPS(false);
+      var barId = $("#searchBarInput").val();
+      console.log(barId);
+      koMods["main"].openLoading();
+      window.wutzAdmin.callService({service:"searchBar/"+barId},function(_res){
+            koMods["main"].closeLoading();
+            console.log(_res);
+            mainMod.bars(_res);
+            if(_res.length === 0){
+              var msg = {type:"danger",
+                        title: locale.trans("msg_bardoesnt_exist_title"),
+                        msg:   locale.trans("msg_bardoesnt_exist")};
+               koMods["main"].displayGetMessage(msg);
+            }
+            if(callback)
+               callback();
+      });
+    };
+
+    mainMod.searchBarsByGPS = function(){
+        mainMod.bars([]);
+        mainMod.openGPS(true);
+        koMods["main"].openLoading();
+        wmap.getNearByBarsFromGPS("mapHolder",function(_res){
+            koMods["main"].closeLoading();
+            if(!_res.err){
+                console.log(_res);
+                var currPosAndMap = _res;
+                if(currPosAndMap.lat && currPosAndMap.lon){
+                  koMods["main"].openLoading();
+                  window.wutzAdmin.callService({service:"getNearByBars/"+currPosAndMap.lat+"/"+currPosAndMap.lon},function(_res){
+                        koMods["main"].closeLoading();
+                        console.log(_res);
+                        wmap.drawBarMarkers(_res, currPosAndMap.gmap, function(selBar){
+                             mainMod.showBarDetails(selBar);
+                        });
+                  });
+                }
+            }
+            else{
+              var msg = {type:"danger",
+                        title: "",
+                        msg:   locale.trans(_res.err)};
+               koMods["main"].displayGetMessage(msg);
+               mainMod.openGPS(false);
+            }
+        });
+    };
+
+    mainMod.showBarDetails = function(selBar,callback){
+       var mw = $("#detailsBarBody .barDescMap").parent().parent().width();
+       var mh = ($("#detailsBarBody .barDescMap").css("height")).replace("px","");
+       //getComputedStyle(parentElement).fontSize);
+       console.log(mw + " -- "+mh);
+       koMods["main"].openLoading();
+       window.wutzAdmin.callService({service:"getBar/"+selBar.id},function(_res){
+             koMods["main"].closeLoading();
+             wtzCache.loadBarCachedInfo(_res.id, _res.idcatalog, _res.catVersion);
+             console.log(_res);
+             mainMod.pickedBar(_res);
+             koMods["main"].barLoaded(_res);
+             var mapImgUrl = wmap.getStaticMapImgUrl(_res.lat,_res.lon,mw,mh);
+             $("#detailsBarBody .barDescMap").html("<img src=\""+mapImgUrl+"\" />");
+             koMods["main"].fillArtists();
+             mainMod.checkIfTokenSetted(_res.id);
+             if(callback)
+                  callback();
+       });
+       $("#searchBarBody").slideUp();
+       $("#detailsBarBody").slideDown();
+    };
+
+    mainMod.justDisplayBarDetails = function(){
+      $("#searchBarBody").slideUp();
+      $("#detailsBarBody").slideDown();
+    };
+
+    mainMod.connect2Bar = function(){
+       var loadedBar = koMods["main"].barLoaded();
+        var dayToken = $("#inputTokenBar input").val();
+        var par = {catId:loadedBar.idcatalog,
+                   token:dayToken};
+          koMods["main"].openLoading();
+          window.wutzAdmin.callService({service:"checkToken",method:"POST",params:par},function(_res){
+              koMods["main"].closeLoading();
+              console.log(_res);
+              if(_res.tokenOK){
+                 loadedBar.connected = true;
+                 loadedBar.dayToken = dayToken;
+                 koMods["main"].barLoaded(loadedBar);
+                 $("#connect2BarContainer").modal("hide");
+                 var barTokensLoaded = localStorage.getItem("tokenCache");
+                 if(!barTokensLoaded){
+                     barTokensLoaded = {default:{}};
+                 }
+                 else{
+                      barTokensLoaded = JSON.parse(barTokensLoaded);
+                 }
+                 barTokensLoaded["default"] = { barId:loadedBar.id,
+                                                dayToken:dayToken
+                                              };
+
+                 barTokensLoaded[loadedBar.id] = {dayToken:dayToken};
+                 localStorage.setItem("tokenCache",JSON.stringify(barTokensLoaded));
+              }
+              else{
+                var msg = {type:"danger",
+                          title: locale.trans("not_connected"),
+                          msg: locale.trans("no_connected_msg")};
+                koMods["main"].displayGetMessage(msg);
+              }
+          });
+    //  koMods["main"].barLoaded(pickedBar);
+    //  mainMod.canClose(true);
+    };
+}

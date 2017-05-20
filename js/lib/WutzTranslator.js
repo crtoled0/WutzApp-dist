@@ -1,1 +1,102 @@
-!function(t,a,n){"use strict";var r={_version:.1,_config:{defaultLang:"en"},_attributes:{},loadWutzTranslator:function(t,a){var n="",r=this;void 0!==t?n=t:(n=navigator.language||navigator.userLanguage,n=n.substring(0,2)),$.getJSON("locale/"+n+".json",function(t){r._attributes=t,r.transPageHtml(),a&&a()})},trans:function(t,a){var n=this,r=n._attributes[t];if(!a)return r;for(var i in a)r=r.replace("__"+i+"__",a[i]);return r},transPageHtml:function(){var t=this;$("[loc-trans]").each(function(a){var n=$(this),r=$(this).attr("loc-trans");r=r.replace(/'/gi,'"'),r=JSON.parse(r),$.each(r,function(a,r){"html"!==a?n.attr(a,t._attributes[r]):n.html(t._attributes[r])})})},transHtmlSection:function(t){var a=this;$("[loc-trans]",t).each(function(t){var n=$(this),r=$(this).attr("loc-trans");r=r.replace(/'/gi,'"'),r=JSON.parse(r),$.each(r,function(t,r){"html"!==t?n.attr(t,a._attributes[r]):n.html(a._attributes[r])})})}},i=function(){};i.prototype=r,i=new i,t.locale=i}(window,document);
+/*
+ * Copyright (C) 2016 CRTOLEDO.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
+
+
+;(function(window, document, undefined){
+	"use strict";
+
+	/**
+	 * The actual constructor of the Global object
+	 */
+	var WutzTranslatorImpl = {
+	    _version : 0.1,
+	    _config : {
+			'defaultLang' : 'en'
+	    },
+            _attributes : {},
+            loadWutzTranslator : function(lang, callback){
+                var lang2Load = "";
+                var transMod = this;
+                if(lang !== undefined){
+                    lang2Load = lang;
+                }
+                else{
+                   lang2Load = navigator.language || navigator.userLanguage;
+                   lang2Load = lang2Load.substring(0,2);
+                }
+                $.getJSON( "locale/"+lang2Load+".json", function(_jsonAtts) {
+                     transMod._attributes = _jsonAtts;
+                     //console.log(JSON.stringify(transMod._attributes));
+                     transMod.transPageHtml();
+										 if(callback)
+                     		callback();
+                });
+
+            },
+            trans: function(attName,replaceTokens){
+                var transMod = this;
+                var attVal = transMod._attributes[attName];
+                if(!replaceTokens)
+                    return attVal;
+                else{
+									  for(var key in replaceTokens){
+											attVal = attVal.replace("__"+key+"__",replaceTokens[key]);
+										}
+                }
+                return attVal;
+            },
+            transPageHtml: function(){
+                var transMod = this;
+                $("[loc-trans]").each(function(i){
+                        var htObj = $(this);
+                        var htmlObj = $(this).attr("loc-trans");
+                        htmlObj = htmlObj.replace(/'/ig,"\"");
+                        //console.log(typeof htmlObj + " : "+htmlObj);
+                        htmlObj = JSON.parse(htmlObj);
+                        $.each(htmlObj, function(objAtt, attName) {
+                                if(objAtt !== "html")
+                                        htObj.attr(objAtt, transMod._attributes[attName]);
+                                else
+                                        htObj.html(transMod._attributes[attName]);
+                        });
+                });
+            },
+						transHtmlSection: function(jqSection){
+                var transMod = this;
+                $("[loc-trans]", jqSection).each(function(i){
+                        var htObj = $(this);
+                        var htmlObj = $(this).attr("loc-trans");
+                        htmlObj = htmlObj.replace(/'/ig,"\"");
+                        //console.log(typeof htmlObj + " : "+htmlObj);
+                        htmlObj = JSON.parse(htmlObj);
+                        $.each(htmlObj, function(objAtt, attName) {
+                                if(objAtt !== "html")
+                                        htObj.attr(objAtt, transMod._attributes[attName]);
+                                else
+                                        htObj.html(transMod._attributes[attName]);
+                        });
+                });
+            }
+	};
+
+	var WutzTranslator = function(){};
+	WutzTranslator.prototype = WutzTranslatorImpl;
+	WutzTranslator = new WutzTranslator();
+	window.locale = WutzTranslator;
+})(window, document);
