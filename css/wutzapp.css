@@ -5,6 +5,7 @@
 .modal-dialog{
   margin-left: 1px;
   margin-right: 1px;
+  width: 95%;
 }
 
 .modal{
@@ -117,6 +118,7 @@
    margin-top: 8px;
    left: -17px;
    position: absolute;
+   z-index: 10px;
 }
 
 /* Smaller viewports — more tablets, old monitors */

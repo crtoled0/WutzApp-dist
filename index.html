@@ -27,10 +27,9 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <link rel="icon" type="image/png" href="img/logo64x.png">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,900,900italic,700italic,700,500italic,400italic,500,300italic,300' rel='stylesheet' type='text/css'>
-	   <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <meta http-equiv="Content-Security-Policy" content="style-src: 'self'; script-src: 'self'; connect-src: *;" >
+    <!-- meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self'; media-src *; connect-src http://wutz.co.uk" -->
     <!-- Good default declaration:
     * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
     * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
@@ -39,8 +38,10 @@
         * Enable eval(): add 'unsafe-eval' to default-src
     * Create your own at http://cspisawesome.com
     -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+    <!-- meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" / -->
     <title>Wutz App</title>
+    <link href='css/roboto.css' rel='stylesheet' type='text/css'>
+	  <link href='css/pacifico.css' rel='stylesheet' type='text/css'>
     <link href="css/burstfly.css" rel="stylesheet">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link href='css/varelaRound.css' rel='stylesheet' type='text/css'>
@@ -50,7 +51,7 @@
 </head>
 
 <body>
-  <div id="loadingDiv"><i class="fa fa-spinner fa-spin" style="font-size:64px"></i></div>
+  <div id="loadingDiv"><i class="fa fa-spinner fa-spin" style="font-size:84px"></i></div>
   <!-- ko if: getMessBox()-->
   <div id="genericMessageBox" data-bind="attr:{'class': 'alert alert-'+getMessBox().type+' alert-dismissible'}" role="alert">
     <!-- button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button -->
@@ -68,7 +69,7 @@
 
         <div id="main-container-menu" class="object">
             <div class="container-menu">
-                  <div id="main-cross" data-bind="click: function(){closeMainMenu();}">
+                  <div id="main-cross" data-bind="click: closeMainMenu">
                     <div id="cross-menu"></div>
                   </div>
                   <div id="main-small-logo">
@@ -214,7 +215,8 @@
 
     <script type="text/javascript" src="js/ui/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/ui/bootstrap-toggle.min.js"></script>
-    <script type="text/javascript" src="js/ui/knockout-3.4.0.js"></script>
+    <script type="text/javascript" src="js/ui/knockout-3.4.2.js"></script>
+    <script type="text/javascript" src='js/ui/knockout-secure-binding.min.js'></script>
     <script type="text/javascript" src="js/ui/textSlider.js"></script>
 
     <!-- Libs -->

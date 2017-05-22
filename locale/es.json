@@ -46,5 +46,7 @@
   "songs":"Canciones",
   "close":"Cerrar",
   "msg_bardoesnt_exist_title":"No encontrado! ",
-  "msg_bardoesnt_exist":"El bar o evento que busca no existe o está cerrado en este momento"
+  "msg_bardoesnt_exist":"El bar o evento que busca no existe o está cerrado en este momento",
+  "se_notFound_title":"Nada encontrado !",
+  "se_notFound_msg":"No hubo resultados de tu busqueda '__criteria__'. Por favor intentalo de nuevo con otro criterio"
 }
