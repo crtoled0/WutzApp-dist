@@ -92,8 +92,7 @@
     <access origin="*" />
     <access origin="*.googleapis.com" />
     <access origin="*.gstatic.com" />
-    <access origin="http://maps.google.com" />
-    <access origin="*" />
+    <access origin="https://maps.google.com" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -106,15 +105,19 @@
         <allow-intent href="geo:*" />
         <access origin="*.googleapis.com" />
         <access origin="*.gstatic.com" />
-        <access origin="http://maps.google.com" />
+        <access origin="https://maps.google.com" />
         <allow-navigation href="*://*.wutz.co.uk/*" />
         <access origin="*.wutz.co.uk" />
+        <access origin="*.cdn.rawgit.com" />
+        <allow-navigation href="*://*.cdn.rawgit.com/*" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <access origin="*.googleapis.com" />
         <access origin="*.gstatic.com" />
-        <access origin="http://maps.google.com" />
+        <access origin="https://maps.google.com" />
+        <access origin="*.cdn.rawgit.com" />
+        <allow-navigation href="*://*.cdn.rawgit.com/*" />
     </platform>
 </widget>
