@@ -834,9 +834,11 @@ body,html{
   #main-container-menu {
   	display:block;
   }
+/**
   .navsection {
     left: -32% !important;
   }
+  **/
 }
 
 /* Smaller viewports — more tablets, old monitors */
