@@ -116,7 +116,7 @@
 
 .navsection{
    margin-top: 8px;
-   left: -17px;
+   left: -30%;
    position: absolute;
    z-index: 10px;
 }
@@ -142,17 +142,23 @@
   vertical-align: top;
 }
 
-@media only screen and (max-width: 860px) {
+/** bigger tables **/
+@media only screen and (min-width: 800px) {
   #mapHolder{
     min-height: 700px;
   }
+  .navsection{
+     left: -30%;
+  }
 }
 
-/* Even smaller viewports — more tablets, etc. */
-
-@media only screen and (max-width: 740px) {
+/** ipad **/
+@media only screen and (min-width: 768px) {
   #mapHolder{
-    min-height: 600px;
+    min-height: 700px;
+  }
+  .navsection{
+     left: -17%;
   }
 }
 
@@ -162,6 +168,9 @@
   #mapHolder{
     min-height: 500px;
   }
+  .navsection{
+     left: -3%;
+  }
 }
 
 /* Mobile phones (Landscape) and Tablets (Portrait) */
@@ -169,5 +178,8 @@
 @media only screen and (max-width: 480px) {
   #mapHolder{
     min-height: 400px;
+  }
+  .navsection{
+     left: -3%;
   }
 }

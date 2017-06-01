@@ -315,7 +315,7 @@ body,html{
 
 .work figure {
     float:left;
-	  width:calc(100% / 4);
+	  width:calc(100% / 5);
     height:auto;
     line-height:auto;
     text-align: center;
@@ -759,6 +759,15 @@ body,html{
 
 .linkin:hover,.google:hover,.facebook:hover,.dribbble:hover{color:#CCC;transform: scale(1.2);}
 
+#toTop{
+	position: fixed;
+	bottom: 30px;
+	right: 40px;
+	cursor: pointer;
+	display: none;
+}
+#toTop .fa {margin-right: 1px;}
+
 /*----------------------------*/
 /* RWD !important */
 /*----------------------------*/
@@ -834,11 +843,6 @@ body,html{
   #main-container-menu {
   	display:block;
   }
-/**
-  .navsection {
-    left: -32% !important;
-  }
-  **/
 }
 
 /* Smaller viewports — more tablets, old monitors */

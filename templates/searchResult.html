@@ -47,7 +47,11 @@
                       <span class="glyphicon glyphicon-facetime-video"></span>
                     <!-- /ko -->
                   </td>
-                  <td data-bind="html:$sng.name">- </td>
+                  <td>
+                      <span data-bind="html:$sng.artist +' |'"></span><br/>
+                      <span data-bind="html:$sng.album +' |'"></span><br/>
+                      <span data-bind="html:$sng.name"></span>
+                  </td>
                   <td>
                     <button type="button" class="btn btn-primary btn-xs" style="float:right;" data-bind="click:function(){$parent.addSongToQueue(this);}">
                         <span class="glyphicon glyphicon-plus"></span>

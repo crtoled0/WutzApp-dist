@@ -128,19 +128,12 @@
       		<div class="navbar object">
             <!-- ko if: displayMainMod() -->
                 <div class="input-group">
-                  <input id="filterInput" type="text" class="form-control input-sm" data-bind="attr:{'placeholder':trans('type_2_search')}">
+                  <input id="filterInput" type="text" class="form-control input-sm" />
                   <span class="input-group-btn">
-                    <!-- ko if: isSearchIndexing() -->
-                      <button class="btn btn-success input-sm disabled" type="button" disabled="disabled">
-                          <span class="fa fa-spinner fa-spin" data-bind="attr:{'title':trans('indexing')}" ></span>
+                      <button class="btn btn-success input-sm" type="button" data-bind="click: function(){openSearchResultModel();}">
+                         <!-- span data-bind="html:trans('search_bar')"></span -->
+                        <span class="glyphicon glyphicon-search" aria-hidden="true" title="Buscar"></span>
                       </button>
-                    <!-- /ko -->
-                    <!-- ko if: !isSearchIndexing() -->
-                      <button class="btn btn-success input-sm" type="button" data-bind="click: function(){openSearchResultModel();},enable: canRaiseSearch">
-                         <span data-bind="html:trans('search_bar')"></span>
-                        <!-- span class="glyphicon glyphicon-search" aria-hidden="true" title="Buscar"></span -->
-                      </button>
-                    <!-- /ko -->
                   </span>
                 </div><!-- /input-group -->
             <!-- /ko  -->
