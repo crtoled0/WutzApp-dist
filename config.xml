@@ -1,23 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.phonegap.wutz" version="2.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-  <name>Wutz</name>
-  <description>
+    <name>Wutz</name>
+    <description>
       App to connect to Wutz network and choose what you want to hear.
   </description>
-  <author email="crtoledo@wutznet.com" href="http://wutz.co.uk">
+    <author email="crtoledo@wutznet.com" href="http://wutz.co.uk">
       Cristian Toledo
   </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
-    <!-- gap:plugin name="org.apache.cordova.device" / -->
     <plugin name="cordova-plugin-device" source="npm" spec="1.1.6" />
     <plugin name="cordova-plugin-geolocation" source="npm" spec="2.1.0" />
-    <!-- plugin name="cordova-plugin-whitelist" spec="1.2.2" / -->
     <plugin name="cordova-plugin-whitelist" source="npm" />
-    <!-- plugin name="cordova-plugin-device" source="npm" spec="~1.1.1" />
-    <plugin name="cordova-plugin-geolocation" source="npm" spec="~2.1.0" />
-    <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1" / -->
+    <plugin name="cordova-plugin-globalization" spec="~1.0.7" />
     <icon src="icon.png" />
     <platform name="android">
         <icon density="ldpi" src="img/logo.png" />
