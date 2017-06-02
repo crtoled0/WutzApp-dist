@@ -41,7 +41,7 @@
   "connectedTo":"Connected to ",
   "catalogViewTo":"Catalog view to ",
   "indexing":"Indexing ...",
-  "searchBarIntro":"Si sabes el nombre o id del bar o evento, puedes buscarlo por acá. Si no lo sabes y estás cerca. Presiona el icono <span class=\"glyphicon glyphicon-map-marker\"></span> para que la aplicación muestre los bares o eventos a tu alrededor que cuentan con la red Wutz. <br/>  Obs: Debes tener activado el GPS de tu telefono para porder usar esta utilidad.",
+  "searchBarIntro":"If you know the name of the bar/event, you can search for it here. Otherwise press the icon <span class=\"glyphicon glyphicon-map-marker\"></span> so the apps can look at bars/events near you. <br/>  Obs: You need to have your GPS active.",
   "barDescTemplate":"Name : __NAME__<br/>Id : __ID__<br/>Manager : __MANAGER__<br/>Phone : __PHONE__<br/>Email : __EMAIL__<br/>",
   "songs":"Songs",
   "close":"Close",
