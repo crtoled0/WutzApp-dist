@@ -4,7 +4,7 @@
     <description>
       App to connect to Wutz network and choose what you want to hear.
   </description>
-    <author email="crtoledo@wutznet.com" href="http://wutz.co.uk">
+    <author email="crtoledo@wutznet.com" href="http://get.wutz.co.uk">
       Cristian Toledo
   </author>
     <content src="index.html" />
@@ -36,22 +36,40 @@
         <splash density="port-xxxhdpi" src="res/screen/android/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <platform name="ios">
-        <icon height="57" platform="ios" src="icon.png" width="57" />
-        <icon height="114" platform="ios" src="icon.png" width="114" />
-        <icon height="40" platform="ios" src="icon.png" width="40" />
-        <icon height="80" platform="ios" src="icon.png" width="80" />
-        <icon height="50" platform="ios" src="icon.png" width="50" />
-        <icon height="100" platform="ios" src="icon.png" width="100" />
-        <icon height="60" platform="ios" src="icon.png" width="60" />
-        <icon height="120" platform="ios" src="icon.png" width="120" />
-        <icon height="180" platform="ios" src="icon.png" width="180" />
-        <icon height="72" platform="ios" src="icon.png" width="72" />
-        <icon height="144" platform="ios" src="icon.png" width="144" />
-        <icon height="76" platform="ios" src="icon.png" width="76" />
-        <icon height="152" platform="ios" src="icon.png" width="152" />
-        <icon height="29" platform="ios" src="icon.png" width="29" />
-        <icon height="58" platform="ios" src="icon.png" width="58" />
-        <icon height="87" platform="ios" src="icon.png" width="87" />
+        <!-- iPhone 6 / 6+ -->
+        <icon src="icon.png" platform="ios" width="180" height="180" />
+        <!-- iPhone / iPod Touch  -->
+        <icon src="icon.png" platform="ios" width="60" height="60" />
+        <icon src="icon.png" platform="ios" width="120" height="120" />
+        <!-- iPad -->
+        <icon src="icon.png" platform="ios" width="76" height="76" />
+        <icon src="icon.png" platform="ios" width="152" height="152" />
+        <icon src="icon.png" platform="ios" width="167" height="167" />
+        <!-- Settings Icon -->
+        <icon src="icon.png" platform="ios" width="29" height="29" />
+        <icon src="icon.png" platform="ios" width="58" height="58" />
+        <icon src="icon.png" platform="ios" width="87" height="87" />
+        <!-- Spotlight Icon -->
+        <icon src="icon.png" platform="ios" width="40" height="40" />
+        <icon src="icon.png" platform="ios" width="80" height="80" />
+        <icon src="icon.png" platform="ios" width="120" height="120" />
+        <!-- iPhone / iPod Touch -->
+        <icon src="icon.png" platform="ios" width="57" height="57" />
+        <icon src="icon.png" platform="ios" width="114" height="114" />
+
+        <!-- iPad -->
+        <icon src="icon-72.png" platform="ios" width="72" height="72" />
+        <icon src="icon-72@2x.png" platform="ios" width="144" height="144" />
+
+        <!-- iPhone Spotlight and Settings Icon -->
+        <icon src="icon-small.png" platform="ios" width="29" height="29" />
+        <icon src="icon-small@2x.png" platform="ios" width="58" height="58" />
+
+        <!-- iPad Spotlight and Settings Icon -->
+        <icon src="icon-50.png" platform="ios" width="50" height="50" />
+        <icon src="icon-50@2x.png" platform="ios" width="100" height="100" />
+
+
         <splash height="1136" platform="ios" src="res/screen/ios/Default~iphone.png" width="640" />
         <splash height="1334" platform="ios" src="res/screen/ios/Default~iphone.png" width="750" />
         <splash height="2208" platform="ios" src="res/screen/ios/Default~iphone.png" width="1242" />
