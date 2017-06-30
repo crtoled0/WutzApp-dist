@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.wutz" version="2.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.phonegap.wutz" version="2.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Wutz</name>
     <description>
       App to connect to Wutz network and choose what you want to hear.
@@ -62,6 +62,7 @@
         <splash height="1024" platform="ios" src="res/screen/ios/Portrait-ipad.png" width="768" />
         <splash height="960" platform="ios" src="res/screen/ios/Default@2x~iphone.png" width="640" />
         <splash height="480" platform="ios" src="res/screen/ios/Default~iphone.png" width="320" />
+        <splash height="568" platform="ios" src="res/screen/ios/Default~iphone.png" width="320" />
     </platform>
     <platform name="wp8">
         <icon height="99" platform="wp8" src="img/logo.png" width="99" />
