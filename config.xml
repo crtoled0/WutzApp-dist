@@ -52,17 +52,18 @@
         <icon height="29" platform="ios" src="res/icon/ios/icon-small.png" width="29" />
         <icon height="58" platform="ios" src="res/icon/ios/icon-small@2x.png" width="58" />
         <icon height="87" platform="ios" src="res/icon/ios/icon-small@3x.png" width="87" />
-        <splash height="1136" platform="ios" src="res/screen/ios/Default~iphone.png" width="640" />
-        <splash height="1334" platform="ios" src="res/screen/ios/Default~iphone.png" width="750" />
-        <splash height="2208" platform="ios" src="res/screen/ios/Default~iphone.png" width="1242" />
-        <splash height="1242" platform="ios" src="res/screen/ios/Landscape-ipad.png" width="2208" />
-        <splash height="1536" platform="ios" src="res/screen/ios/Landscape-ipad.png" width="2048" />
-        <splash height="768" platform="ios" src="res/screen/ios/Landscape-ipad.png" width="1024" />
-        <splash height="2048" platform="ios" src="res/screen/ios/Portrait-ipad.png" width="1536" />
-        <splash height="1024" platform="ios" src="res/screen/ios/Portrait-ipad.png" width="768" />
-        <splash height="960" platform="ios" src="res/screen/ios/Default@2x~iphone.png" width="640" />
-        <splash height="480" platform="ios" src="res/screen/ios/Default~iphone.png" width="320" />
-        <splash height="568" platform="ios" src="res/screen/ios/Default~iphone.png" width="320" />
+
+        <splash height="1136" platform="ios" src="res/screen/ios/640x1136.png" width="640" />
+        <splash height="1334" platform="ios" src="res/screen/ios/750x1334.png" width="750" />
+        <splash height="2208" platform="ios" src="res/screen/ios/1242x2208.png" width="1242" />
+        <splash height="1242" platform="ios" src="res/screen/ios/2208x1242.png" width="2208" />
+        <splash height="1536" platform="ios" src="res/screen/ios/2048x1536.png" width="2048" />
+        <splash height="768" platform="ios" src="res/screen/ios/1024x768.png" width="1024" />
+        <splash height="2048" platform="ios" src="res/screen/ios/1536x2048.png" width="1536" />
+        <splash height="1024" platform="ios" src="res/screen/ios/768x1024.png" width="768" />
+        <splash height="960" platform="ios" src="res/screen/ios/640x960.png" width="640" />
+        <splash height="480" platform="ios" src="res/screen/ios/320x480.png" width="320" />
+        <splash height="568" platform="ios" src="res/screen/ios/320x568.png" width="320" />
     </platform>
     <platform name="wp8">
         <icon height="99" platform="wp8" src="img/logo.png" width="99" />
