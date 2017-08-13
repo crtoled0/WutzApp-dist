@@ -142,6 +142,30 @@
   vertical-align: top;
 }
 
+#playListContainer table img {
+   width: 64px;
+   height: 64px;
+}
+
+#playListContainer tbody tr:first-child {
+    background-color: #5cb85c;
+    color: #000000;
+}
+
+#playListContainer .songRow td:first-child{
+    width: 64px;
+}
+
+.mainMenuItem{
+   padding-bottom: 90px;
+}
+
+.mainMenuItem .fa{
+    font-size: 50px;
+}
+
+.modal { overflow: auto !important; }
+
 /** bigger tables **/
 @media only screen and (min-width: 800px) {
   #mapHolder{

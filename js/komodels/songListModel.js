@@ -1,1 +1,101 @@
-function SongListModel(){var o=this;o.songs=ko.observableArray([]),o.init=function(){console.log("SongListModel Loaded")},o.loadSongList=function(){console.log("Loading Songs");var e=koMods.main.currSelected().album,a=koMods.main.barLoaded().idcatalog;o.songs([]);var n=wtzCache.getSongs(e.idalbum);n?o.songs(n):(koMods.main.openLoading(),window.wutzAdmin.callService({service:"getSongsPerAlbum/"+a+"/"+e.idalbum},function(a){console.log(a),o.songs(a),wtzCache.addSongs(e.idalbum,a),koMods.main.closeLoading()}))},o.loadSongList4Artist=function(e){var a=koMods.main.barLoaded().idcatalog;o.songs([]),koMods.main.openLoading(),window.wutzAdmin.callService({service:"getArtistSongs/"+a+"/"+e},function(e){o.songs(e),koMods.main.closeLoading()})},o.addItem=function(o){var e=koMods.main.barLoaded();if(console.log(o),e.connected){var a=e.idcatalog,n=window.localStorage.getItem("guid"),s={token:e.dayToken,catId:a,songId:o.songid,guid:n};koMods.main.openLoading(),window.wutzAdmin.callService({service:"addSongToQueue/",method:"POST",params:s},function(a){if(koMods.main.closeLoading(),console.log(a),"OK"===a.added){var n={type:"success",title:locale.trans("ok"),msg:locale.trans("added_song_msg",{SONGNAME:o.name})};koMods.main.displayGetMessage(n)}else{var s="";s="added_max_songs"===a.msg?locale.trans("on_limit_msg",{ALLOWED_SONGS:e.songsAllowed}):"repeated"===a.msg?locale.trans("already_added",{SONGNAME:o.name}):"exptoken"===a.msg?locale.trans("expired_token"):locale.trans("gen_failed_msg");var n={type:"danger",title:"",msg:s};koMods.main.displayGetMessage(n)}})}else{console.log("No Connected to Bar");var d={type:"danger",title:"",msg:locale.trans("expired_token")};koMods.main.displayGetMessage(d),koMods.main.openConnect2Bar(),$("#songListContainer").modal("hide")}}}
+function SongListModel() {
+    var mainMod = this;
+
+    mainMod.songs = ko.observableArray([]);
+
+    mainMod.init = function(){
+      console.log("SongListModel Loaded");
+    };
+
+    mainMod.loadSongList = function(){
+      console.log("Loading Songs");
+      var albSel = koMods["main"].currSelected().album;
+      var catId =  koMods["main"].barLoaded().idcatalog;
+      mainMod.songs([]);
+
+      var cacheSongs = wtzCache.getSongs(albSel.idalbum);
+      if(!cacheSongs){
+          koMods["main"].openLoading();
+          window.wutzAdmin.callService({service:"getSongsPerAlbum/"+catId+"/"+albSel.idalbum},function(_res){
+                console.log(_res);
+                mainMod.songs(_res);
+                wtzCache.addSongs(albSel.idalbum, _res);
+                koMods["main"].closeLoading();
+          });
+      }
+      else
+         mainMod.songs(cacheSongs);
+    };
+
+    mainMod.loadSongList4Artist = function(artId){
+      var catId =  koMods["main"].barLoaded().idcatalog;
+      mainMod.songs([]);
+
+    //  var cacheSongs = wtzCache.getSongs(albSel.idalbum);
+  //    if(!cacheSongs){
+          koMods["main"].openLoading();
+          window.wutzAdmin.callService({service:"getArtistSongs/"+catId+"/"+artId},function(_res){
+                mainMod.songs(_res);
+              //  wtzCache.addSongs(albSel.idalbum, _res);
+                koMods["main"].closeLoading();
+          });
+    //  }
+      //else
+        // mainMod.songs(cacheSongs);
+    };
+
+    mainMod.addItem = function(song){
+      var loadedBar = koMods["main"].barLoaded();
+      console.log(song);
+      if(loadedBar.connected){
+        var catId =  loadedBar.idcatalog;
+        var guid = window.localStorage.getItem("guid");
+        var params = {token : loadedBar.dayToken,
+                      catId : catId,
+                      songId : song.songid,
+                      guid : guid};
+          koMods["main"].openLoading();
+          window.wutzAdmin.callService({service:"addSongToQueue/",method:"POST",params:params},function(_res){
+                koMods["main"].closeLoading();
+                console.log(_res);
+                if(_res.added === "OK"){
+                    var msg = {type:"success",
+                              title:locale.trans("ok"),
+                              msg: locale.trans("added_song_msg",{"SONGNAME":song.name})};
+                    koMods["main"].displayGetMessage(msg);
+                }
+                else{
+                  var errMsg=""
+                  if(_res.msg === "added_max_songs")
+                      errMsg = locale.trans("on_limit_msg",{"ALLOWED_SONGS":loadedBar.songsAllowed});
+                  else if(_res.msg === "repeated")
+                      errMsg = locale.trans("already_added",{"SONGNAME":song.name});
+                  else if(_res.msg === "exptoken"){
+                      errMsg = locale.trans("expired_token");
+                      closeSongsAndTryConnect();
+                  }
+                  else
+                       errMsg = locale.trans("gen_failed_msg");
+
+                  var msg = {type:"danger",
+                            title:"",
+                            msg:  errMsg};
+                  koMods["main"].displayGetMessage(msg);
+                }
+          });
+      }
+      else{
+         console.log("No Connected to Bar");
+         var msg = {type:"danger",
+                   title:"",
+                   msg:locale.trans("expired_token")};
+         koMods["main"].displayGetMessage(msg);
+         closeSongsAndTryConnect();
+      }
+    };
+
+    var closeSongsAndTryConnect = function(){
+      koMods["main"].openConnect2Bar();
+      $("#songListContainer").modal("hide");
+    };
+}

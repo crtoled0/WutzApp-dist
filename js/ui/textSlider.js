@@ -1,1 +1,31 @@
-!function(e){var t={speed:3e3,timeLapseBetween:1e4};e.fn.extend({textSlider:function(a){var a=e.extend(t,a);return this.each(function(){var t=a,n=e(this),i=parseFloat(n.parent().css("width").replace("px","")),s=parseFloat(n.css("width").replace("px",""));if(n.css({opacity:1,left:"0%"}),s>i){setInterval(function(){n.animate({left:"-100%",opacity:.4},t.speed,null,function(){n.animate({left:"0%",opacity:1},t.speed)})},t.timeLapseBetween)}})}})}(jQuery);
+ (function($){
+        var defaults = {
+                   speed: 3000,
+                   timeLapseBetween: 10000
+            };
+     $.fn.extend({ 
+         textSlider: function(options) {
+            var options = $.extend(defaults, options);
+            return this.each(function() {
+                
+                 var o =options;
+                 var obj = $(this);
+                 var parWidth = parseFloat(obj.parent().css("width").replace("px",""));
+                 var objWidth = parseFloat(obj.css("width").replace("px",""));
+                 obj.css({opacity:1,left: "0%"});
+                 
+                 if(objWidth > parWidth){
+                    
+                    var inter = setInterval(function(){
+                       
+                     //  obj.css({opacity:0,left: "0%"});
+                     //  obj.animate({opacity:1},1000);
+                           obj.animate({left: "-100%",opacity:0.4}, o.speed,null,function(){
+                           obj.animate({left: "0%",opacity:1}, o.speed);
+                       });
+                    }, o.timeLapseBetween);
+                 }
+            });
+        }
+    });
+})(jQuery);

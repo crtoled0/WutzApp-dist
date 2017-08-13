@@ -1,1 +1,144 @@
-!function(e,t,o){"use strict";var a={_version:.1,_config:{gmKey:null,keys:{browserGAPIKey:"AIzaSyCUmViI6PWuNRffHoByiWqcSQ7Xt7MSQMg",androidKey:"AIzaSyAi0mwFlF5jniTaorbXjB2xklLr2SowVbA",iosGAPIKey:"AIzaSyAbW4YdgW4WJgYvqqSvUuVD1hzKDzyhgZU"}}};a.load=function(t,o){var a="";t=JSON.parse(JSON.stringify(t)),/Android/i.test(navigator.userAgent)?(a="https://maps.google.com/maps/api/js?v=3.exp&libraries=geometry,places&ext=.js&key="+this._config.keys.androidKey,this._config.gmKey=this._config.keys.androidKey):/webOS|iPhone|iPad|iPod/i.test(navigator.userAgent)?(a="https://maps.google.com/maps/api/js?v=3.exp&libraries=geometry,places&ext=.js&key="+this._config.keys.iosGAPIKey,this._config.gmKey=this._config.keys.iosGAPIKey):(a="https://maps.google.com/maps/api/js?v=3.exp&libraries=geometry,places&ext=.js&key="+this._config.keys.browserGAPIKey,this._config.gmKey=this._config.keys.browserGAPIKey);var i='<script id="geoLocLib" type="text/javascript" src="'+a+'"><\/script>';$("body").append(i);var r=e.setInterval(function(){google&&($("body").append('<script id="markWLab" src="https://cdn.rawgit.com/googlemaps/v3-utility-library/master/markerwithlabel/src/markerwithlabel.js"><\/script>'),e.clearInterval(r),o&&o())},100)},a.getStaticMapImgUrl=function(e,t,o,a){return"https://maps.googleapis.com/maps/api/staticmap?center="+e+","+t+"&markers="+e+","+t+"&zoom=16&size="+o+"x"+a+"&key="+this._config.gmKey},a.getNearByBarsFromGPS=function(e,o){navigator.geolocation?navigator.geolocation.getCurrentPosition(function(a){var i=a.coords.latitude,r=a.coords.longitude,s=new google.maps.LatLng(i,r),n={zoom:17,center:s,mapTypeId:google.maps.MapTypeId.ROADMAP},g=new google.maps.Map(t.getElementById(e),n);o({lat:i,lon:r,gmap:g})},function(e){switch(e.code){case e.PERMISSION_DENIED:o({err:"gps_not_active"});break;case e.POSITION_UNAVAILABLE:case e.TIMEOUT:o({err:"gps_timeout"});break;case e.UNKNOWN_ERROR:o({err:"gps_not_active"})}},{enableHighAccuracy:!0,timeout:6e3}):o({err:"gps_not_active"})},a.drawBarMarkers=function(e,t,o){var a=new Array;for(var i in e)a[i]=new MarkerWithLabel({position:new google.maps.LatLng(e[i].lat,e[i].lon),map:t,title:e[i].id,labelContent:e[i].id,labelAnchor:new google.maps.Point(15,65),labelClass:"mapWutzLabels",labelInBackground:!1,icon:"./img/mark.png"}),a[i].addListener("click",function(){o({id:this.title}),console.log("Clicked Marker "+this.title)})};var i=function(){};i.prototype=a,i=new i,e.wmap=i}(window,document);
+/*
+ * Copyright (C) 2017 CRTOLEDO.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
+
+
+;(function(window, document, undefined){
+	"use strict";
+        /**
+     * The actual constructor of the GenTFunctions object
+     */
+    var WutzGMapsAPIImpl = {
+        _version : 0.1,
+        _config : {
+           gmKey : null,
+					 keys : {browserGAPIKey:"AIzaSyCUmViI6PWuNRffHoByiWqcSQ7Xt7MSQMg",
+					 				 androidKey:"AIzaSyAi0mwFlF5jniTaorbXjB2xklLr2SowVbA",
+									 iosGAPIKey:"AIzaSyAbW4YdgW4WJgYvqqSvUuVD1hzKDzyhgZU"
+								   }
+        }
+    };
+	/**
+     Private
+    **/
+
+//Public
+    WutzGMapsAPIImpl.load = function(wutzConfig,callback){
+            var gmapsUrl="";
+						wutzConfig = JSON.parse(JSON.stringify(wutzConfig));
+						if(/Android/i.test(navigator.userAgent) ) {
+					     gmapsUrl = "https://maps.google.com/maps/api/js?v=3.exp&libraries=geometry,places&ext=.js&key="+this._config.keys.androidKey;
+               this._config.gmKey = this._config.keys.androidKey;
+            }
+            else if(/webOS|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+							  gmapsUrl = "https://maps.google.com/maps/api/js?v=3.exp&libraries=geometry,places&ext=.js&key="+this._config.keys.iosGAPIKey;
+                this._config.gmKey = this._config.keys.iosGAPIKey;
+            }
+            else{
+							 gmapsUrl = "https://maps.google.com/maps/api/js?v=3.exp&libraries=geometry,places&ext=.js&key="+this._config.keys.browserGAPIKey;
+               this._config.gmKey = this._config.keys.browserGAPIKey;
+            }
+				  var geoLocObj =  "<script id=\"geoLocLib\" type=\"text/javascript\" src=\""+gmapsUrl+"\"></script>";
+          $("body").append(geoLocObj);
+          var labelmarker = "<script id=\"markWLab\" src=\"https://cdn.rawgit.com/googlemaps/v3-utility-library/master/markerwithlabel/src/markerwithlabel.js\"></script>";
+          var waiting4GM = window.setInterval(function(){
+            if(google){
+                    $("body").append(labelmarker);
+                    window.clearInterval(waiting4GM);
+                    if(callback)
+                      callback();
+                }
+          },100);
+    };
+
+    WutzGMapsAPIImpl.getStaticMapImgUrl = function(lat,lon,mwidth,mheight){
+        var barMapUrl = "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lon+"&markers="+lat+","+lon+"&zoom=16&size="+mwidth+"x"+mheight+"&key="+this._config.gmKey;
+        return barMapUrl;
+    };
+
+   WutzGMapsAPIImpl.getNearByBarsFromGPS = function(mapHolderId, callback){
+		 if (navigator.geolocation) {
+				 navigator.geolocation.getCurrentPosition(
+						 function(position){
+									 var lat = position.coords.latitude;
+									 var lon = position.coords.longitude;
+									 var latlon = new google.maps.LatLng(lat, lon);
+									 var myOptions = {
+					 		        zoom: 17,
+					 		        center: latlon,
+					 		        mapTypeId: google.maps.MapTypeId.ROADMAP
+					 		    };
+					 		    var map = new google.maps.Map(document.getElementById(mapHolderId), myOptions);
+									callback({lat:lat,
+														lon:lon,
+														gmap:map});
+						 },
+						 function(error){
+							 var message = "";
+							 switch (error.code) {
+									 case error.PERMISSION_DENIED:
+											 callback({err:"gps_not_active"});
+											 break;
+									 case error.POSITION_UNAVAILABLE:
+											 callback({err:"gps_timeout"});
+											 break;
+									 case error.TIMEOUT:
+											 callback({err:"gps_timeout"});
+											 break;
+									 case error.UNKNOWN_ERROR:
+											 callback({err:"gps_not_active"});
+											 break;
+							 }
+						 },
+						 {enableHighAccuracy:true, timeout: 6000});
+		 }
+		 else {
+				 callback({err:"gps_not_active"});
+		 }
+	 };
+
+
+	 WutzGMapsAPIImpl.drawBarMarkers = function(markersArr, map, callbackOnSelectBar){
+		 var imageIcon = "./img/mark.png";
+		 var markerBars = new Array();
+
+		 for(var i in markersArr){
+			 markerBars[i]= new MarkerWithLabel({
+																			position: new google.maps.LatLng(markersArr[i].lat, markersArr[i].lon),
+																			map: map,
+																			title: markersArr[i].id,
+																			labelContent: markersArr[i].id,
+																			labelAnchor: new google.maps.Point(15, 65),
+																			labelClass: "mapWutzLabels", // the CSS class for the label
+																			labelInBackground: false,
+																			icon: imageIcon
+																		});
+
+
+			 markerBars[i].addListener('click', function(){
+							callbackOnSelectBar({id:this.title});
+							console.log("Clicked Marker "+this.title);
+		   });
+		 }
+	 };
+
+	var WutzGMapsAPI = function(){};
+	WutzGMapsAPI.prototype = WutzGMapsAPIImpl;
+	WutzGMapsAPI = new WutzGMapsAPI();
+	window.wmap = WutzGMapsAPI;
+})(window, document);

@@ -288,7 +288,7 @@ body,html{
 	float:left;
 	min-height:53px;
 	width:100%;
-	margin-bottom:25px;
+	margin-bottom:70px;
 }
 
 .small-logo{
@@ -308,9 +308,9 @@ body,html{
     float:left;
     width:100%;
     height:auto;
-	background-color:#F4F4F4;
-	margin-top:25px;
-	opacity:0;
+  	background-color:#F4F4F4;
+  	margin-top:25px;
+  	opacity:0;
 }
 
 .work figure {
@@ -332,6 +332,18 @@ body,html{
 	box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.2);
 	background-color:#FFF;
   border-radius: 4px;
+}
+
+.work figure .icon-btn{
+    font-size: 50px;
+}
+
+.work figure .btn{
+   width: 100%;
+}
+
+.work #sizer{
+   visibility: hidden;
 }
 
 .work figure.white dl{
@@ -704,7 +716,6 @@ body,html{
 #wrapper-copyright{
 	float:left;
 	width:100%;
-	height:70px;
 	background-color:#2E2D30;
 }
 
@@ -722,8 +733,8 @@ body,html{
 	text-align:left;
 	font-family: Helvetica, sans-serif;
     font-size: 15px;
-	height:70px;
-	line-height:70px;
+
+
 	cursor:pointer;
 	-webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -783,55 +794,55 @@ body,html{
 /* Others wide screen */
 
 @media only screen and (max-width: 1200px) {
-#main-header,.navbar,.container,.container-footer,.thank,.oldnew,.copyright {
-	width:940px;
-	margin-left:-465px;
-}
-#main-container-menu {
-	display:block;
-}
+    #main-header,.navbar,.container,.container-footer,.thank,.oldnew,.copyright {
+    	width:940px;
+    	margin-left:-465px;
+    }
+    #main-container-menu {
+    	display:block;
+    }
 
-.work figure {
-	width:calc(100% / 3 - 30px);
-}
+    .work figure {
+    	width:calc(100% / 3 - 30px);
+    }
 }
 
 /* Small viewports — Old monitors, netbooks, tablets (landscape), etc. */
 
 @media only screen and (max-width: 965px) {
-#main-header,.navbar,.container,.container-footer,.thank,.oldnew,.copyright {
-	width:835px;
-	margin-left:-417.5px;
-}
-#main-container-menu {
-	display:block;
-}
-#row-1f,#row-2f,#row-3f,#row-4f{
-	width:100%;
-}
-.text-row-1f,.text-row-2f,.text-row-3f,.text-row-4f{
-	text-align:center;
-	width:70%;
-	margin-left:15%;
-}
-.text-row-1f{
-	margin-top:75px;
-	margin-bottom:35px;
-}
-.text-row-4f{
-	margin-top:0;
-	margin-bottom:0;
-}
-.text-row-2f,.text-row-3f{
-	margin-bottom:35px;
-	margin-top:0;
-}
-#tip_newsletter_input{
-	position:relative;
-	left:50%;
-	margin-left:-112.5px;
-	margin-bottom:75px;
-}
+      #main-header,.navbar,.container,.container-footer,.thank,.oldnew,.copyright {
+      	width:835px;
+      	margin-left:-417.5px;
+      }
+      #main-container-menu {
+      	display:block;
+      }
+      #row-1f,#row-2f,#row-3f,#row-4f{
+      	width:100%;
+      }
+      .text-row-1f,.text-row-2f,.text-row-3f,.text-row-4f{
+      	text-align:center;
+      	width:70%;
+      	margin-left:15%;
+      }
+      .text-row-1f{
+      	margin-top:75px;
+      	margin-bottom:35px;
+      }
+      .text-row-4f{
+      	margin-top:0;
+      	margin-bottom:0;
+      }
+      .text-row-2f,.text-row-3f{
+      	margin-bottom:35px;
+      	margin-top:0;
+      }
+      #tip_newsletter_input{
+      	position:relative;
+      	left:50%;
+      	margin-left:-112.5px;
+      	margin-bottom:75px;
+      }
 }
 
 
@@ -860,87 +871,87 @@ body,html{
 /* Even smaller viewports — more tablets, etc. */
 
 @media only screen and (max-width: 740px) {
-#main-header,.navbar,.container,.container-footer,.thank,.oldnew,.copyright {
-	width:585px;
-	margin-left:-292.5px;
-}
-#wrapper-bouton-icon,#main_tip_search{
-	display:none;
-}
+      #main-header,.navbar,.container,.container-footer,.thank,.oldnew,.copyright {
+      	width:585px;
+      	margin-left:-292.5px;
+      }
+      #wrapper-bouton-icon,#main_tip_search{
+      	display:none;
+      }
 
-#stripes {
-	display:block;
-}
-#main-container-menu {
-	display:block;
-}
-.work figure {
-	width:calc(100% / 2 - 30px);
-}
+      #stripes {
+      	display:block;
+      }
+      #main-container-menu {
+      	display:block;
+      }
+      .work figure {
+      	width:calc(100% / 2 - 30px);
+      }
 }
 
 /* Mobile phones (Landscape) and Tablets (Portrait) */
 
 @media only screen and (max-width: 610px) {
-#main-header,.navbar,.container,.container-footer,.thank,.oldnew,.copyright {
-	width:455px;
-	margin-left:-227.5px;
-}
-#wrapper-sorting{
-	position:relative;
-	width:300px;
-	left:50%;
-	margin-left:-165px;
-}
-.top-rated,.recent,.oldies{
-	text-align:center;
-	font-family: 'Roboto',sans-serif;
-    font-size: 13px;
-	height:40px;
-	line-height:40px;
-	margin-left:25px;
-}
+      #main-header,.navbar,.container,.container-footer,.thank,.oldnew,.copyright {
+      	width:455px;
+      	margin-left:-227.5px;
+      }
+      #wrapper-sorting{
+      	position:relative;
+      	width:300px;
+      	left:50%;
+      	margin-left:-165px;
+      }
+      .top-rated,.recent,.oldies{
+      	text-align:center;
+      	font-family: 'Roboto',sans-serif;
+          font-size: 13px;
+      	height:40px;
+      	line-height:40px;
+      	margin-left:25px;
+      }
 }
 
 /* Mobile phones (Landscape) and Tablets (Portrait) */
 
 @media only screen and (max-width: 480px) {
-#main-header,.navbar,.container,.container-footer,.thank,.oldnew,.copyright {
-	width:295px;
-	margin-left:-147.5px;
-}
-.work figure {
-	width:calc((94%/2));
-  margin: 3px;
-}
+      #main-header,.navbar,.container,.container-footer,.thank,.oldnew,.copyright {
+      	width:295px;
+      	margin-left:-147.5px;
+      }
+      .work figure {
+      	width:calc((94%/2));
+        margin: 3px;
+      }
 
-.small-logo{
-	left:60%;
-}
+      .small-logo{
+      	left:60%;
+      }
 
-.container{
-  margin: 5px;
-  width: 100%;
-}
+      .container{
+        margin: 5px;
+        width: 100%;
+      }
 
-.work figure .box-label {
-    font-size: 10px;
-}
+      .work figure .box-label {
+          font-size: 15px;
+      }
 
-.work figure .box-label-text {
-    font-size: 10px;
-}
+      .work figure .box-label-text {
+          font-size: 15px;
+      }
 
-.wrapper-navbouton{
-	display:none;
-}
-.copy-text{
-	text-align:center;
-	width:100%;
-}
-.thank-text{
-    font-size: 50px;
-}
+      .wrapper-navbouton{
+      	display:none;
+      }
+      .copy-text{
+      	text-align:center;
+      	width:100%;
+      }
+      .thank-text{
+          font-size: 50px;
+      }
 }
 /* Mobile phones (iphone4/5)*/
 

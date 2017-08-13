@@ -48,5 +48,8 @@
   "msg_bardoesnt_exist_title":"Not found! ",
   "msg_bardoesnt_exist":"The bar or event doesn't exist or is temporary close.",
   "se_notFound_title":"Nothing Found !",
-  "se_notFound_msg":"There were no results with the criteria '__criteria__'. Please try again"
+  "se_notFound_msg":"There were no results with the criteria '__criteria__'. Please try again",
+  "view_currPList4":"View current playlist for bar ",
+  "see_all_songs":"All Songs",
+  "search_other_bar":"Search Another Bar"
 }

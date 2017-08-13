@@ -1,1 +1,118 @@
-function SearchResultModel(){var o=this;o.seArtists=ko.observableArray([]),o.seAlbums=ko.observableArray([]),o.seSongs=ko.observableArray([]),o.init=function(){console.log("SearchResultModel Loaded")},o.applySearch=function(n){console.log("Searching ... "+n);var n=n.toLowerCase().replace(/\s/gi,""),a=wtzCache.getBarCachedCatalog();o.seArtists([]),o.seAlbums([]),o.seSongs([]);var t=0;e(n,function(s){o.seSongs([]),o.seAlbums([]),s&&(s.albums&&o.seAlbums(s.albums),s.songs&&o.seSongs(s.songs)),t++}),setTimeout(function(){s(n,a.artists,function(s){console.log(s),s.finished?t++:o.seArtists.push(s)})},0);var i=setInterval(function(){if(t>=2&&(clearInterval(i),o.seArtists().length+o.seAlbums().length+o.seSongs().length===0)){var s={type:"danger",title:locale.trans("se_notFound_title"),msg:locale.trans("se_notFound_msg",{criteria:n})};koMods.main.displayGetMessage(s),koMods.main.back2MainModel()}},100)},o.goArtAlbList=function(o){koMods.main.openSongListModel(o,!0)},o.displaySongs4Album=function(o){koMods.main.openSongListModel(o)},o.addSongToQueue=function(o){koMods.songList?koMods.songList.addItem(o):koMods.main.loadSongListModel(function(){koMods.songList.addItem(o)})};var s=function(o,s,e){s.forEach(function(s,n){-1!==s.name.toLowerCase().replace(/\s/gi,"").indexOf(o)&&e(s)}),e({finished:!0})},e=function(o,s){koMods.main.openLoading();var e=koMods.main.barLoaded().idcatalog;window.wutzAdmin.callService({service:"searchOnCatalog/"+e+"/"+o},function(o){koMods.main.closeLoading(),s(o)})}}
+function SearchResultModel() {
+    var mainMod = this;
+    mainMod.seArtists = ko.observableArray([]);
+    mainMod.seAlbums = ko.observableArray([]);
+    mainMod.seSongs = ko.observableArray([]);
+
+    mainMod.init = function(){
+      console.log("SearchResultModel Loaded");
+    };
+
+    mainMod.applySearch = function(text){
+          console.log("Searching ... " + text);
+          var text = (text.toLowerCase()).replace(/\s/ig,"");
+          var catalog = wtzCache.getBarCachedCatalog();
+          mainMod.seArtists([]);
+          mainMod.seAlbums([]);
+          mainMod.seSongs([]);
+          var finishedCounter = 0;
+
+          searchAlbAndSongsOnCatalog(text, function(_seRes){
+              mainMod.seSongs([]);
+              mainMod.seAlbums([]);
+              if(_seRes){
+                  if(_seRes.albums)
+                      mainMod.seAlbums(_seRes.albums);
+                  if(_seRes.songs)
+                      mainMod.seSongs(_seRes.songs);
+              }
+              finishedCounter++;
+          });
+          setTimeout(function(){
+            searchArtists(text,catalog.artists,function(_node){
+                console.log(_node);
+                if(!_node.finished)
+                    mainMod.seArtists.push(_node);
+                else
+                   finishedCounter++;
+            });
+          },0);
+
+          var inter = setInterval(function(){
+              if(finishedCounter >= 2){
+                clearInterval(inter);
+                if((mainMod.seArtists().length + mainMod.seAlbums().length + mainMod.seSongs().length) === 0){
+                  var msg = {type:"danger",
+                            title: locale.trans("se_notFound_title"),
+                            msg:   locale.trans("se_notFound_msg",{"criteria":text})};
+                   koMods["main"].displayGetMessage(msg);
+                   koMods["main"].back2MainModel();
+                }
+              }
+          },100);
+    };
+
+    mainMod.goArtAlbList = function(art){
+      // koMods["main"].back2MainModel();
+      // koMods["main"].fillAlbums(art);
+      koMods["main"].openSongListModel(art, true);
+    };
+
+    mainMod.displaySongs4Album = function(alb){
+         koMods["main"].openSongListModel(alb);
+    };
+
+    mainMod.addSongToQueue = function(sng){
+      if(koMods["songList"])
+        koMods["songList"].addItem(sng);
+      else{
+          koMods["main"].loadSongListModel(function(){
+               koMods["songList"].addItem(sng);
+          });
+      }
+    };
+
+//Private functions
+   var searchArtists = function(text, artArr, callback){
+       artArr.forEach(function(artNode,idx){
+            var name = ((artNode.name).toLowerCase()).replace(/\s/ig,"");
+            if(name.indexOf(text) !== -1)
+                callback(artNode);
+       });
+       callback({finished:true});
+   };
+
+   var searchAlbums = function(text, albArr, callback){
+       for(var artId in albArr){
+          for(var i in albArr[artId]){
+             var albNode = albArr[artId][i];
+             var name = ((albNode.name).toLowerCase()).replace(/\s/ig,"");
+             if(name.indexOf(text) !== -1)
+                 callback(albNode);
+          }
+       }
+     callback({finished:true});
+   };
+
+   var searchSongs = function(text, sgnArr, callback){
+       for(var albId in sgnArr){
+          for(var i in sgnArr[albId]){
+             var sngNode = sgnArr[albId][i];
+             var name = ((sngNode.name).toLowerCase()).replace(/\s/ig,"");
+             if(name.indexOf(text) !== -1)
+                 callback(sngNode);
+          }
+       }
+     callback({finished:true});
+   };
+
+   var searchAlbAndSongsOnCatalog = function(text, callback){
+     koMods["main"].openLoading();
+     var catid = koMods["main"].barLoaded().idcatalog;
+     window.wutzAdmin.callService({service:"searchOnCatalog/"+catid+"/"+text},function(_res){
+           koMods["main"].closeLoading();
+           callback(_res);
+     });
+   };
+
+}

@@ -75,16 +75,27 @@
                   <div id="main-small-logo">
                     <div class="small-logo"></div>
                   </div>
-                  <div class="mainMenuItem" data-bind="if: barLoaded() && !barLoaded().connected">
+                  <br/>
+                  <!-- ko if: barLoaded() && !barLoaded().connected -->
+                  <div class="mainMenuItem">
                       <a href="#" data-bind="click:function(){openConnect2Bar();}">
-                        <span class="fa fa-bolt" aria-hidden="true"></span>
+                        <span class="fa fa-plug" aria-hidden="true"></span><br/>
                         <span data-bind="html:trans('connect')"></span>- <span data-bind="html:barLoaded().nombreBar"></span>
                       </a>
                   </div>
+                  <!-- /ko -->
+                  <!-- ko if:  barLoaded() && barLoaded().connected -->
+                  <div class="mainMenuItem">
+                      <a href="#" data-bind="click:function(){viewCurrentPlayList();}">
+                        <span class="fa fa-play-circle" aria-hidden="false"></span><br/>
+                        <span>PlayList</span>
+                      </a>
+                  </div>
+                  <!-- /ko -->
                   <div class="mainMenuItem" data-bind="if: barLoaded()">
                       <a href="#" data-bind="click:function(){logOutBar();}">
-                        <span class="fa fa-sign-out" aria-hidden="false"></span>
-                        <span data-bind="html:trans('pick_bar')"></span> <span data-bind="html:barLoaded().nombreBar"></span>
+                        <span class="fa fa-sign-out" aria-hidden="false"></span><br/>
+                        <span >Logout</span>
                       </a>
                   </div>
                   <div class="mainMenuItem" data-bind="if: false"><!-- this feature will come in future version -->
@@ -153,7 +164,7 @@
   <div id="wrapper-container">
       <div class="container object">
       			<div id="main-container-image">
-                <section class="work closeAlbumsSec" style="display:none">
+                <!-- section class="work closeAlbumsSec" style="display:none">
                     <button class="btn btn-danger btn-block" data-bind="click:closeAlbums();">
                       <span class="glyphicon glyphicon-circle-arrow-left"></span>
                       <span data-bind="html:trans('back_2_artists')"></span>
@@ -173,8 +184,8 @@
                       <span class="glyphicon glyphicon-circle-arrow-left"></span>
                       <span data-bind="html:trans('back_2_artists')"></span>
                     </button>
-                </section>
-      					<section class="work artists" data-bind="foreach:{data: artists ,as: '$art'}">
+                </section -->
+                <section class="work artists" data-bind="foreach:{data: artists ,as: '$art'}">
                      <figure>
                        <a href="#" data-bind="click:function(){$parent.fillAlbums(this);}">
                          <img data-bind="attr:{'src':$art.lfm_img_url}" alt="" />
@@ -191,11 +202,64 @@
           	</div>
       	</div>
         <div id="wrapper-copyright">
-      		<div class="copyright">
-          		<div class="copy-text object">Copyright © 2016. Template by <a style="color:#D0D1D4;" href="http://designscrazed.org/">Dcrazed</a></div>
+        	<div class="copyright">
+              <div class="copy-text object">
+                  Wutz Author: <a style="color:#D0D1D4;" href="mailto:crtoledo@wutz.co.uk" target="_parent">Cristian Toledo</a> <br/>
+                  Copyright © 2016. Template by <a style="color:#D0D1D4;" href="http://designscrazed.org/" target="_parent">Dcrazed</a>
+              </div>
         	</div>
         </div>
       </div>
+
+<!-- MODALs Section -->
+<!-- AlbumList Modal -->
+<div id="albumListModal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-bind="click:function(){closeAlbums();}">
+              <img src="img/cross-menu.svg" />
+            </button>
+          </div>
+          <div class="modal-body">
+            <section class="work">
+              <figure>
+                <button type="button" class="btn btn-primary" data-bind="click:function(){openSongListModel(currSelected().artist, true);}">
+                  <i class="fa fa-chevron-circle-down icon-btn" aria-hidden="true"></i><br/> <span data-bind="html:trans('see_all_songs')">See All Songs</span>
+                </button>
+              </figure>
+              <!-- ko foreach:{data: albums ,as: '$alb'} -->
+              <figure>
+                <a href="#" data-bind="click:function(){$parent.openSongListModel(this);}">
+                  <img data-bind="attr:{'src':$alb.lfm_img_url}" alt="" />
+                  <span data-bind="html:$alb.name,attr:{'class':'box-label label label-'+$parent.nextColor()}">-</span>
+                  <span class="label label-active box-label-text itemName" data-bind="html:$alb.name">-</span>
+                </a>
+              </figure>
+              <!-- /ko -->
+              <figure>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" data-bind="click:function(){closeAlbums();}">
+                  <i class="fa fa-times icon-btn" aria-hidden="true"></i><br/> <span data-bind="html:trans('close')">Cerrar</span>
+                </button>
+              </figure>
+              <figure id="sizer">
+                <a href="#">
+                  <img src="./img/logo.png" alt="" />
+                  <span class="box-label label label-default">-</span>
+                  <span class="label label-active box-label-text itemName" >-</span>
+                </a>
+              </figure>
+            </section>
+          </div>
+          <div class="modal-footer">
+
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+ </div><!-- /.modal -->
+<!--  /AlbumList Modal -->
+
+<!-- -->
 
     <script type="text/javascript" src="js/ui/jquery.min.js"></script>
     <script type="text/javascript" src="js/ui/jquery.scrollTo.min.js"></script>
