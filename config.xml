@@ -10,10 +10,6 @@
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
-    <plugin name="cordova-plugin-device" source="npm" spec="1.1.6" />
-    <plugin name="cordova-plugin-geolocation" source="npm" spec="2.1.0" />
-    <plugin name="cordova-plugin-whitelist" source="npm" />
-    <plugin name="cordova-plugin-globalization" spec="~1.0.7" />
     <icon src="icon.png" />
     <platform name="android">
         <icon density="ldpi" src="img/logo.png" />
@@ -36,7 +32,7 @@
         <splash density="port-xxxhdpi" src="res/screen/android/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <platform name="ios">
-      <icon height="57" platform="ios" src="res/icon/ios/icon.png" width="57" />
+        <icon height="57" platform="ios" src="res/icon/ios/icon.png" width="57" />
         <icon height="114" platform="ios" src="res/icon/ios/icon@2x.png" width="114" />
         <icon height="40" platform="ios" src="res/icon/ios/icon-40.png" width="40" />
         <icon height="80" platform="ios" src="res/icon/ios/icon-40@2x.png" width="80" />
@@ -52,7 +48,6 @@
         <icon height="29" platform="ios" src="res/icon/ios/icon-small.png" width="29" />
         <icon height="58" platform="ios" src="res/icon/ios/icon-small@2x.png" width="58" />
         <icon height="87" platform="ios" src="res/icon/ios/icon-small@3x.png" width="87" />
-
         <splash height="1136" platform="ios" src="res/screen/ios/640x1136.png" width="640" />
         <splash height="1334" platform="ios" src="res/screen/ios/750x1334.png" width="750" />
         <splash height="2208" platform="ios" src="res/screen/ios/1242x2208.png" width="1242" />
@@ -118,4 +113,9 @@
         <access origin="*.cdn.rawgit.com" />
         <allow-navigation href="*://*.cdn.rawgit.com/*" />
     </platform>
+    <plugin name="cordova-plugin-device" spec="1.1.6" />
+    <plugin name="cordova-plugin-geolocation" spec="2.1.0" />
+    <plugin name="cordova-plugin-whitelist" />
+    <plugin name="cordova-plugin-globalization" spec="~1.0.7" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="~6.0.8" />
 </widget>

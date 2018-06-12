@@ -20,7 +20,7 @@
   "details":"Details",
   "songs_same_time":"Songs allowed to queue at the same time",
   "added_song_msg":"All Good!, the song \"__SONGNAME__\" was added to the queue",
-  "on_limit_msg":"On limit, Please wait that one of your already added songs play and you'll be able to add more. Remember you can add __ALLOWED_SONGS__ songs at the same time",
+  "on_limit_msg":"Please add more credits to be able to queue more songs.",
   "already_added":"The song \"__SONGNAME__\" it's already in the queue",
   "expired_token":"The token has expired, please type in the new token in order to add more songs to the queue",
   "gen_failed_msg":"Failed, please try again",
@@ -51,5 +51,7 @@
   "se_notFound_msg":"There were no results with the criteria '__criteria__'. Please try again",
   "view_currPList4":"View current playlist for bar ",
   "see_all_songs":"All Songs",
-  "search_other_bar":"Search Another Bar"
+  "search_other_bar":"Search Another Bar",
+  "credits": "Credits",
+  "added_credits":"__CRED_ADDED__ credits added"
 }

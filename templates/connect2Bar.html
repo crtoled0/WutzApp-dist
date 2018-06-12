@@ -9,12 +9,23 @@
               </div>
             </div>
             <div class="row">
+               <div class="col-xs-6 col-md-6 text-right">
+                  <button class="btn btn-primary searchButton" type="button" data-bind="click:function(){koMods.main.catchFromQR();}">
+                    <i class="fa fa-qrcode"></i>
+                  </button>
+               </div>
+               <div class="col-xs-6 col-md-6">
+                 <button class="btn btn-warning searchButton" type="button" data-bind="click:function(){searchBarsByGPS();}">
+                   <i class="fa fa-map-marker"></i>
+                 </button>
+               </div>
+
+            </div>
+            <div class="row">
                 <div class="col-md-12">
                   <div id="inputSearchBar" class="input-group">
                     <span class="input-group-btn">
-                      <button class="btn btn-warning input-md" type="button" data-bind="click:function(){searchBarsByGPS();}">
-                        <span class="glyphicon glyphicon-map-marker"></span>
-                      </button>
+
                     </span>
                     <input type="text" class="form-control input-md" data-bind="attr:{'placeholder':koMods['main'].trans('type_bar_id')}" id="searchBarInput">
                     <span class="input-group-btn">

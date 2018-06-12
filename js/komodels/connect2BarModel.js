@@ -162,7 +162,7 @@ function Connect2BarModel() {
       $("#detailsBarBody").slideDown();
     };
 
-    mainMod.connect2Bar = function(params){
+    mainMod.connect2Bar = function(params, callback){
        var loadedBar = koMods["main"].barLoaded();
         var dayToken = $("#inputTokenBar input").val();
         var par = {catId:loadedBar.idcatalog,
@@ -171,13 +171,15 @@ function Connect2BarModel() {
               return false;
 
           koMods["main"].openLoading();
-          window.wutzAdmin.callService({service:"checkToken",method:"POST",params:par},function(_res){
+          koMods["main"].linkDevice2Bar(dayToken,function(_res){
+        //  window.wutzAdmin.callService({service:"checkToken",method:"POST",params:par},function(_res){
               koMods["main"].closeLoading();
-              console.log(_res);
-              if(_res.tokenOK){
+              console.log(JSON.stringify(_res));
+              if(_res.OK){
                  loadedBar.connected = true;
                  loadedBar.dayToken = dayToken;
                  koMods["main"].barLoaded(loadedBar);
+                 koMods["main"].refreshCredits();
                  $("#connect2BarContainer").modal("hide");
                  var barTokensLoaded = localStorage.getItem("tokenCache");
                  if(!barTokensLoaded){
@@ -204,6 +206,9 @@ function Connect2BarModel() {
                   $("#searchBarInput").val("");
                 }
               }
+
+              if(callback)
+                   callback();
           });
     //  koMods["main"].barLoaded(pickedBar);
     //  mainMod.canClose(true);

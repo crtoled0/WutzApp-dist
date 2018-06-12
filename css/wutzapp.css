@@ -164,6 +164,16 @@
     font-size: 50px;
 }
 
+.searchButton i {
+    font-size: 28px;
+}
+
+.searchButton {
+    height: 50px;
+    margin-bottom: 10px;
+    width: 50px;
+}
+
 .modal { overflow: auto !important; }
 
 /** bigger tables **/

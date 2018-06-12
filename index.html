@@ -98,6 +98,12 @@
                         <span >Logout</span>
                       </a>
                   </div>
+                  <div class="mainMenuItem">
+                      <a href="#" data-bind="click:function(){catchFromQR();}">
+                        <span class="fa fa-qrcode" aria-hidden="false"></span><br/>
+                        <span >Add Credits</span>
+                      </a>
+                  </div>
                   <div class="mainMenuItem" data-bind="if: false"><!-- this feature will come in future version -->
                       <a href="#">
                         <span class="fa fa-facebook" aria-hidden="false"></span>
@@ -114,9 +120,13 @@
             <div id="stripes" data-bind="click: function(){openMainMenu();}"></div>
             <!-- ko if: barLoaded() && barLoaded().nombreBar && barLoaded().connected -->
             <div class="center-header">
-              <div class="label label-success" role="alert">
+              <div class="label label-success" role="alert" style="border-radius: 4px 0px 0px 4px;">
                   <span data-bind="html:trans('connectedTo')"></span>
                   <span data-bind="html: barLoaded().nombreBar"></span>
+              </div>
+              <div class="label label-info" role="alert" style="border-radius: 0px 4px 4px 0px;">
+                <span data-bind="html:trans('credits')"></span>
+                <span data-bind="html: credits()"></span>
               </div>
             </div>
             <!-- /ko -->

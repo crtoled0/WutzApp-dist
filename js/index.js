@@ -39,7 +39,7 @@ var app = {
           var inter = setInterval(function(){
             if(tries < 20){
               tries++;
-              if(device !== undefined){
+              if(device){
                  clearInterval(inter);
                  mainApp.onDeviceReady();
               }

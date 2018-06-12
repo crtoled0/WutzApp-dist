@@ -48,6 +48,15 @@ function SongListModel() {
       var loadedBar = koMods["main"].barLoaded();
       console.log(song);
       if(loadedBar.connected){
+
+        if(koMods["main"].credits() <= 0){
+            var msg = {type:"danger",
+                      title:"",
+                      msg:  locale.trans("on_limit_msg")};
+            koMods["main"].displayGetMessage(msg);
+            return ;
+        }
+
         var catId =  loadedBar.idcatalog;
         var guid = window.localStorage.getItem("guid");
         var params = {token : loadedBar.dayToken,
@@ -63,11 +72,12 @@ function SongListModel() {
                               title:locale.trans("ok"),
                               msg: locale.trans("added_song_msg",{"SONGNAME":song.name})};
                     koMods["main"].displayGetMessage(msg);
+                    koMods["main"].refreshCredits();
                 }
                 else{
                   var errMsg=""
                   if(_res.msg === "added_max_songs")
-                      errMsg = locale.trans("on_limit_msg",{"ALLOWED_SONGS":loadedBar.songsAllowed});
+                      errMsg = locale.trans("on_limit_msg");
                   else if(_res.msg === "repeated")
                       errMsg = locale.trans("already_added",{"SONGNAME":song.name});
                   else if(_res.msg === "exptoken"){

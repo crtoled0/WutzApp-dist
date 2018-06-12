@@ -15,6 +15,8 @@ function MainModel() {
     mainMod.displayMainMod = ko.observable(true);
     mainMod.canRaiseSearch = ko.observable(false);
 
+    mainMod.credits = ko.observable(0);
+
 
     mainMod.trans = function(attr,parm){
           if(!parm)
@@ -312,6 +314,95 @@ function MainModel() {
     };
     mainMod.closeMainMenu = function(){
        $("#main-container-menu").stop().animate({'left':'-100%'},300);
+    };
+
+    mainMod.refreshCredits = function(){
+      var barL = mainMod.barLoaded();
+      var _guid = window.localStorage.getItem("guid");
+      var _parms = {catId:barL.idcatalog,
+                    guid:_guid};
+      var currCredits = mainMod.credits();
+      wutzAdmin.callService({service:"checkCredits",method:"POST",params:_parms},function(_res){
+        if(_res.OK){
+          if(currCredits < _res.totalCredits){
+              var msg = {type:"success",
+                        title:locale.trans("ok"),
+                        msg: locale.trans("added_credits",{"CRED_ADDED":(_res.totalCredits-currCredits)})};
+              mainMod.displayGetMessage(msg);
+          }
+          console.log(JSON.stringify(_res));
+          mainMod.credits(_res.totalCredits);
+        }
+      });
+    };
+
+    mainMod.collectCreditsFromTransfer = function(_barMsg,callback){
+      var barL = mainMod.barLoaded();
+      var _guid = window.localStorage.getItem("guid");
+      var _parms = {catId:barL.idcatalog,
+                    guidto:_guid,
+                    tranCode: _barMsg.transferCode};
+      mainMod.linkDevice2Bar(_barMsg.dayToken,function(){
+          wutzAdmin.callService({service:"transferCredits",method:"POST",params:_parms},function(_res){
+            console.log("back from transfer "+JSON.stringify(_res));
+              if(_res.OK)
+                 mainMod.refreshCredits();
+              callback(_res);
+          });
+      });
+    };
+
+    mainMod.linkDevice2Bar = function(_dayToken,callback){
+      var barL = mainMod.barLoaded();
+      var _guid = window.localStorage.getItem("guid");
+      var _parms = {catId:barL.idcatalog,
+                    guid:_guid,
+                    token: _dayToken};
+
+      JSON.stringify(_parms);
+
+      wutzAdmin.callService({service:"connect2Bar",method:"POST",params:_parms},callback);
+    };
+
+
+    mainMod.catchFromQR = function(){
+      cordova.plugins.barcodeScanner.scan(
+         function (result) {
+           //{barId: mainMod.barDet().id,dayToken:mainMod.barDet().dayToken,transferCode:_res.transfCode}
+            if(result.text){
+             var _msg = JSON.parse(result.text);
+             var connect2Bar = !mainMod.barLoaded() || !mainMod.barLoaded().connected || mainMod.barLoaded().id !== _msg.barId;
+             if(connect2Bar){
+                   console.log(JSON.stringify(_msg));
+                   koMods["connect2Bar"].showBarDetails({id:_msg.barId},function(){
+                       $("#inputTokenBar input").val(_msg.dayToken);
+                       koMods["connect2Bar"].connect2Bar(null,function(){
+                         if(_msg.transferCode){
+                           mainMod.collectCreditsFromTransfer(_msg, function(_res){
+                             console.log(_res);
+                             $("#cross-menu").click();
+                           });
+                         }
+                       });
+                   });
+             }
+             else if(_msg.transferCode){
+               mainMod.collectCreditsFromTransfer(_msg, function(_res){
+                 console.log(JSON.stringify(_res));
+                 $("#cross-menu").click();
+               });
+             }
+           }
+          /**
+             alert("We got a barcode\n" +
+                   "Result: " + result.text + "\n" +
+                   "Format: " + result.format + "\n" +
+                   "Cancelled: " + result.cancelled);
+                   **/
+         },
+         function (error) {
+             alert("Scanning failed: " + error);
+         });
     };
 }
 var koMods = {};

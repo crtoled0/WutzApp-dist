@@ -20,7 +20,7 @@
   "details":"Detalles",
   "songs_same_time":"Temas al mismo tiempo",
   "added_song_msg":"Tamos, La canción \"__SONGNAME__\" se agregó a la cola",
-  "on_limit_msg":"Cumpliste el límite, espera a que toque un tema tuyo y podrás agregar más. Para este bar se pueden agregar __ALLOWED_SONGS__ temas al mismo tiempo",
+  "on_limit_msg":"Agrega más créditos para poder encolar temas",
   "already_added":"El tema \"__SONGNAME__\" ya está agregado a la cola",
   "expired_token":"El token ha expirado, ingrese el nuevo token para poner más temas",
   "gen_failed_msg":"Falló, intenta de nuevo",
@@ -51,5 +51,7 @@
   "se_notFound_msg":"No hubo resultados de tu busqueda '__criteria__'. Por favor intentalo de nuevo con otro criterio",
   "view_currPList4":"Ver lista de reproducción del bar ",
   "see_all_songs":"Todas las canciones",
-  "search_other_bar":"Busca otro bar/evento"
+  "search_other_bar":"Busca otro bar/evento",
+  "credits": "Créditos",
+  "added_credits":"__CRED_ADDED__ créditos agregados"
 }
